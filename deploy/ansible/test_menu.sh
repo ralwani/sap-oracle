@@ -93,6 +93,7 @@ options=(
         "SAP specific OS Config"
         "BOM Processing"
         "HANA DB Install"
+        "Oracle DB Install"
         "SCS Install"
         "DB Load"
         "PAS Install"
@@ -119,6 +120,7 @@ all_playbooks=(
         ${cmd_dir}/playbook_02_os_sap_specific_config.yaml
         ${cmd_dir}/playbook_03_bom_processing.yaml
         ${cmd_dir}/playbook_04_00_00_hana_db_install.yaml
+        ${cmd_dir}/playbook_04_01_00_oracle_db_install.yaml
         ${cmd_dir}/playbook_05_00_00_sap_scs_install.yaml
         ${cmd_dir}/playbook_05_01_sap_dbload.yaml
         ${cmd_dir}/playbook_05_02_sap_pas_install.yaml
@@ -130,10 +132,8 @@ all_playbooks=(
         ${cmd_dir}/playbook_06_00_00_pacemaker.yaml
         ${cmd_dir}/playbook_06_00_01_pacemaker_scs.yaml
         ${cmd_dir}/playbook_06_00_03_pacemaker_hana.yaml
-        ${cmd_dir}/tester.yaml
-        ${cmd_dir}/tester.yaml
+        ${cmd_dir}/playbook_bom_validator.yaml
         ${cmd_dir}/playbook_bom_downloader.yaml
-        ${cmd_dir}/playbook_bom_uploader.yaml
 )
 
 # Set of options that will be passed to the ansible-playbook command
@@ -157,7 +157,7 @@ do
 
         case $opt in
         "${options[-1]}")   # Quit
-                rm sshkey       
+                rm sshkey
                 break;;
         "${options[-2]}")   # Run through all playbooks
                 playbooks+=( "${all_playbooks[@]}" );;
