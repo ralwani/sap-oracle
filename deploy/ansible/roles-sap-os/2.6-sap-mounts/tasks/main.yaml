@@ -109,5 +109,5 @@
 # Import this task only if the tier is ora.
 - import_tasks:                        "oracle.yaml"
   when: 
-    - tier == "ora"
+    - node_tier == "oracle"
 ...
