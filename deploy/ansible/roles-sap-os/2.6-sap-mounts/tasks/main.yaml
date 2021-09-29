@@ -107,7 +107,7 @@
     - tier == 'sapos'
 
 # Import this task only if the tier is ora.
-- import_tasks: "oracle.yaml"
+- import_tasks:                        "oracle.yaml"
   when: 
     - tier == "ora"
 ...
