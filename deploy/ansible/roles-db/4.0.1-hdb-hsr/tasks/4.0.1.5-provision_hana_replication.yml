@@ -1,7 +1,7 @@
 ---
 
 - name: HSR - Ensure HANA 1.0 is configured for System Replication
-  become_user: "{{ hdb_sid_admin_user }}"
+  become_user: "{{ db_sid_admin_user }}"
   block:
 
     # https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/sap-hana-high-availability#configure-sap-hana-10-system-replication
@@ -22,19 +22,19 @@
     - not hana_system_replication_enabled
 
 - name: HSR - Perform pre-flight backup checks
-  become_user: "{{ hdb_sid_admin_user }}"
+  become_user: "{{ db_sid_admin_user }}"
   block:
 
-    - name: HSR - Check backup file exists for SYSTEMDB database for System Identifier {{ hdb_sid }}
+    - name: HSR - Check backup file exists for SYSTEMDB database for System Identifier {{ db_sid }}
       ansible.builtin.stat:
-        path: "{{ hdb_sid_backup_dir }}/INITIAL_SYSTEMDB_BACKUP_databackup_0_1"
+        path: "{{ db_sid_backup_dir }}/INITIAL_SYSTEMDB_BACKUP_databackup_0_1"
       register: systemdb_backup_file
       failed_when: not systemdb_backup_file.stat.exists
       changed_when: false
 
-    - name: HSR - Check backup file exists for tenant {{ hana_tenant_database_name }} database for System Identifier {{ hdb_sid }}
+    - name: HSR - Check backup file exists for tenant {{ hana_tenant_database_name }} database for System Identifier {{ db_sid }}
       ansible.builtin.stat:
-        path: "{{ hdb_sid_backup_dir }}/INITIAL_{{ hana_tenant_database_name }}_BACKUP_databackup_0_1"
+        path: "{{ db_sid_backup_dir }}/INITIAL_{{ hana_tenant_database_name }}_BACKUP_databackup_0_1"
       register: tenant_backup_file
       failed_when: not tenant_backup_file.stat.exists
       changed_when: false
@@ -42,7 +42,7 @@
   when: ansible_hostname == primary_instance_name
 
 - name: HSR - Ensure HANA is configured for System Replication
-  become_user: "{{ hdb_sid_admin_user }}"
+  become_user: "{{ db_sid_admin_user }}"
   block:
 
     - name: HSR - Ensure Primary node is configured for System Replication
@@ -73,7 +73,7 @@
 
 
 - name: HSR - Ensure System Replication is configured
-  become_user: "{{ hdb_sid_admin_user }}"
+  become_user: "{{ db_sid_admin_user }}"
   block:
 
     - import_tasks: stop_hana.yml

@@ -27,11 +27,11 @@
   when:                     ansible_os_family == 'Suse'
 
 - name:           Verify the hook Installation
-  become_user:    "{{ hdb_sid | lower }}adm"
+  become_user:    "{{ db_sid | lower }}adm"
   when:           inventory_hostname == primary_instance_name
   shell:          |
                   set -o pipefail
-                  cd /usr/sap/{{ hdb_sid | upper }}/HDB{{ hdb_instance_number }}/{{ primary_instance_name }}/trace
+                  cd /usr/sap/{{ db_sid | upper }}/HDB{{ hdb_instance_number }}/{{ primary_instance_name }}/trace
                   IFS=' '
                   get_saphanasr_rc=$(grep ha_dr_ nameserver_* | \
                       awk '/ha_dr_SAPHanaSR.*crm_attribute/ \

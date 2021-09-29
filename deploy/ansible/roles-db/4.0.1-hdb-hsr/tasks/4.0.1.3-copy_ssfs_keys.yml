@@ -4,26 +4,26 @@
   when: ansible_hostname == primary_instance_name
   block:
 
-    - name: HSR - Ensure the Primary node SSFS_{{ hdb_hdb_sid | upper }}.DAT file exists
+    - name: HSR - Ensure the Primary node SSFS_{{ hdb_db_sid | upper }}.DAT file exists
       ansible.builtin.stat:
         path: "{{ path_ssfs_dat }}"
       register: primary_dat_file_result
       failed_when: primary_dat_file_result.failed
       when: ansible_hostname == primary_instance_name
 
-    - name: HSR - Ensure the Primary node SSFS_{{ hdb_sid | upper }}.KEY file exists
+    - name: HSR - Ensure the Primary node SSFS_{{ db_sid | upper }}.KEY file exists
       ansible.builtin.stat:
         path: "{{ path_ssfs_key }}"
       register: primary_key_file_result
       failed_when: primary_key_file_result.failed
 
-- name: HSR - Ensure the Primary node XSA SSFS_{{ hdb_sid | upper }}.DAT file exists
+- name: HSR - Ensure the Primary node XSA SSFS_{{ db_sid | upper }}.DAT file exists
   ansible.builtin.stat:
     path: "{{ path_xsa_ssfs_dat }}"
   register: primary_xsa_dat_file_result
   failed_when: false
 
-- name: HSR - Ensure the Primary node XSA SSFS_{{ hdb_sid | upper }}.KEY file exists
+- name: HSR - Ensure the Primary node XSA SSFS_{{ db_sid | upper }}.KEY file exists
   ansible.builtin.stat:
     path: "{{ path_xsa_ssfs_key }}"
   register: primary_xsa_key_file_result

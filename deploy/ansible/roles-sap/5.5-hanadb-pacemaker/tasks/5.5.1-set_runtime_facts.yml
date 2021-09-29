@@ -60,8 +60,8 @@
 - name: Ensure HANA DB version is checked and captured
   block:
     - name: Check HANA DB Version and register
-      become_user: "{{ hdb_sid | lower }}adm"
-      ansible.builtin.command: /hana/shared/{{ hdb_sid | upper }}/HDB00/HDB version
+      become_user: "{{ db_sid | lower }}adm"
+      ansible.builtin.command: /hana/shared/{{ db_sid| upper }}/HDB00/HDB version
       register: hdbversion
       changed_when: false
     - name: Print the HDB version
