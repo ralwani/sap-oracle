@@ -2,6 +2,8 @@
 
 export PATH=/opt/terraform/bin:/opt/ansible/bin:${PATH}
 
+export ANSIBLE_PASSWORD='CmklFDm0#BB=wYNwg+X<g{1?tRkBTC43'
+
 cmd_dir="$(dirname "$(readlink -e "${BASH_SOURCE[0]}")")"
 
 
@@ -141,6 +143,7 @@ playbook_options=(
         --inventory-file="${sap_sid}_hosts.yaml"
         --private-key=${ANSIBLE_PRIVATE_KEY_FILE}
         --extra-vars="_workspace_directory=`pwd`"
+        -e ansible_ssh_pass='{{ lookup("env", "ANSIBLE_PASSWORD") }}'
         --extra-vars="@${sap_params_file}"
         "${@}"
 )

@@ -44,7 +44,7 @@
                                        {%- if lv_parts| length == 2 -%}
                                        {%- set _path = '/' ~ lv_parts[-1] -%}
                                        {%- else -%}
-                                       {%- set _path = ['/' ~ lv_parts[-2], anydb_sid | upper, lv_parts[-1]] | join('/') -%}
+                                       {%- set _path = ['/' ~ lv_parts[-2], db_sid | upper, lv_parts[-1]] | join('/') -%}
                                        {%- endif -%}
                                        {{- _path -}} 
     fstype:                            "{{ item.fstype }}"
@@ -72,7 +72,7 @@
   loop:
     - { tier: 'sapos',          type: 'xfs',     src: '/dev/vg_sap/lv_usrsap',                           path: '/usr/sap' }
     - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/usr/sap/install',               path: '/usr/sap/install' }                # Special Install Structure; Destroy on Completion
-    - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/sapmnt/{{ anydb_sid|upper }}',  path: '/sapmnt/{{ anydb_sid|upper }}' }
+    - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/sapmnt/{{ db_sid|upper }}',  path: '/sapmnt/{{ db_sid|upper }}' }
   
   when:         
     item.tier in ["sapos","ora"]
