@@ -372,17 +372,6 @@ sudo ${ansible_venv_bin}/pip3 install \
     yamllint \
     msal
 
-# Install Ansible collections under the ANSIBLE_COLLECTIONS_PATHS for all users.
-sudo mkdir -p ${ansible_collections}
-sudo -H ${ansible_venv_bin}/ansible-galaxy collection install azure.azcollection --force --collections-path ${ansible_collections}
-
-# Install the Python requirements associated with the Ansible Azure collection
-# that was just installed into the Ansible venv.
-azure_azcollection_version=$(jq -r '.collection_info.version' ${ansible_collections}/ansible_collections/azure/azcollection/MANIFEST.json)
-wget -nv -O /tmp/requirements-azure.txt https://raw.githubusercontent.com/ansible-collections/azure/v${azure_azcollection_version}/requirements-azure.txt
-sudo ${ansible_venv_bin}/pip3 install \
-    -r /tmp/requirements-azure.txt
-
 # Create symlinks for all relevant commands that were installed in the Ansible
 # venv's bin so that they are available in the /opt/ansible/bin directory, which
 # will be added to the system PATH. This ensures that we expose only those tools
@@ -421,6 +410,20 @@ done
 # Ensure that Python argcomplete is enabled for all users interactive shell sessions
 sudo ${ansible_bin}/activate-global-python-argcomplete
 
+
+# Install Ansible collections under the ANSIBLE_COLLECTIONS_PATHS for all users.
+sudo mkdir -p ${ansible_collections}
+sudo -H ${ansible_venv_bin}/ansible-galaxy collection install azure.azcollection --force --collections-path ${ansible_collections}
+
+# Install the Python requirements associated with the Ansible Azure collection
+# that was just installed into the Ansible venv.
+azure_azcollection_version=$(jq -r '.collection_info.version' ${ansible_collections}/ansible_collections/azure/azcollection/MANIFEST.json)
+wget -nv -O /tmp/requirements-azure.txt https://raw.githubusercontent.com/ansible-collections/azure/v${azure_azcollection_version}/requirements-azure.txt  || :
+if [ -f /tmp/requirements-azure.txt ]; then
+  sudo ${ansible_venv_bin}/pip3 install  -r /tmp/requirements-azure.txt 
+fi
+
+
 az login --identity 2>error.log || :
 
 if [ ! -f error.log ]; then
@@ -453,7 +456,39 @@ mkdir -p \
 
 
 #
-# Create /etc/profile.d script to setup environment for interactive sessions
+# Update current session
+#
+echo '# Configure environment settings for deployer interactive session' 
+
+# Add new /opt bin directories to start of PATH to ensure the versions we installed
+# are preferred over any installed standard system versions.
+export "PATH=${ansible_bin}:${tf_bin}:"'${PATH}'
+
+# Set env for ansible
+export ANSIBLE_HOST_KEY_CHECKING=False 
+export ANSIBLE_COLLECTIONS_PATHS=${ansible_collections} 
+
+# Set env for MSI
+export ARM_USE_MSI=true
+
+if [ ! -n "${client_id}" ]; then
+  export ARM_CLIENT_ID=${client_id}
+fi
+
+if [ ! -n "${tenant_id}" ]; then
+  export ARM_TENANT_ID=${tenant_id}
+fi
+
+export ARM_SUBSCRIPTION_ID=${subscription_id}
+export DEPLOYMENT_REPO_PATH=$HOME/Azure_SAP_Automated_Deployment/sap-hana
+
+# Ensure that the user's account is logged in to Azure with specified creds
+az login --identity --output none
+'echo ${USER} account ready for use with Azure SAP Automated Deployment'
+
+
+#
+# Create /etc/profile.d script to setup environment for future interactive sessions
 #
 echo '# Configure environment settings for deployer interactive sessions' | sudo tee /etc/profile.d/deploy_server.sh
 
