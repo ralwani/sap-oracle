@@ -49,8 +49,6 @@ set -o errexit
 # stage of the pipefile has a non-zero exit status.
 set -o pipefail
 
-# Fail if attempting to access and unset variable or parameter
-set -o nounset
 
 #
 # Terraform Version settings
@@ -60,7 +58,12 @@ if [ ! -n "${TF_VERSION}" ]; then
   TF_VERSION="0.14.8"
 fi
 
+
+# Fail if attempting to access and unset variable or parameter
+set -o nounset
+
 tfversion=$TF_VERSION
+
 
 
 #
@@ -256,6 +259,7 @@ required_pkgs=(
     apt-transport-https
     lsb-release
     gnupg
+    sshpass
 )
 
 cli_pkgs=(

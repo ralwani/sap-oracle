@@ -47,7 +47,13 @@ fi
 # the inventory file name to use.
 sap_sid="$(awk '$1 == "sap_sid:" {print $2}' ${sap_params_file})"
 
+kv_name="$(awk '$1 == "kv_name:" {print $2}' ${sap_params_file})"
 
+prefix="$(awk '$1 == "secret_prefix:" {print $2}' ${sap_params_file})"
+pwsecretname=$prefix-sid-password
+
+pwsecret=$(az keyvault secret show --vault-name ${kv_name} --name ${pwsecretname} | jq -r .value)
+export ANSIBLE_PASSWORD=$pwsecret
 #
 # Ansible configuration settings.
 #
@@ -145,6 +151,7 @@ playbook_options=(
         --extra-vars="_workspace_directory=`pwd`"
         -e ansible_ssh_pass='{{ lookup("env", "ANSIBLE_PASSWORD") }}'
         --extra-vars="@${sap_params_file}"
+        -e ansible_ssh_pass='{{ lookup("env", "ANSIBLE_PASSWORD") }}'
         "${@}"
 )
 
