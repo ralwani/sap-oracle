@@ -5,6 +5,22 @@
 # +------------------------------------4--------------------------------------*/
 ---
 
+- hosts:                               localhost
+  name:                                Get SAP Password from KeyVault
+  gather_facts:                        true
+  vars_files:
+    - vars/ansible-input-api.yaml                               # API Input template with defaults
+
+  tasks:
+
+    - name:                            Include 0.1-passwords Role
+      ansible.builtin.include_role:
+        name:                          roles-misc/0.1-passwords
+        public:                        true
+      tags:
+        - 0.1-passwords
+
+
 # Steps:
 #   01) NFS: Mount
 #
@@ -27,10 +43,12 @@
 #
 # -------------------------------------+---------------------------------------8
 
-  - ansible.builtin.set_fact:
-      tier:                            "ora"                                    # Actions for Oracle DB Servers
-    tags:
-      - always
+    - name:                            Setting the DB facts
+      ansible.builtin.set_fact:
+        tier:                            "ora"                                    # Actions for Oracle DB Servers
+        main_password:                 "{{ hostvars.localhost.sap_password }}"
+      tags:
+        - always
 
 # -------------------------------------+---------------------------------------8
 # Role: oracle-users
@@ -38,8 +56,13 @@
 # Description: Create oracle users and groups.
 #              
 #
-  - include_role:
-      name:                            roles-os/1.11-accounts
+    - block:
+        - name:                        Include 1.11-accounts
+          ansible.builtin.include_role:
+            name:                      roles-os/1.11-accounts
+      tags:
+        - 1.11-accounts
+      
 # -------------------------------------+---------------------------------------8
 # -------------------------------------+---------------------------------------8
 # Role: sap-mounts
@@ -47,14 +70,18 @@
 # Description: Mount Filesystems
 #              Mount NFS Filesystems
 #
-  - include_role:
-      name:                            roles-sap-os/2.6-sap-mounts
+    - block:
+        - name:                        Include 2.6-sap-mounts
+          ansible.builtin.include_role:
+            name:                      roles-sap-os/2.6-sap-mounts
+      tags:
+        - 2.6-sap-mounts
 # -------------------------------------+---------------------------------------8
 
 
 # Oracle installation has to be done with oracle user. Change the user to become orasid and call the installer.
 
-- hosts:                               "{{ db_sid|upper }}_DB"
+- hosts:                               "{{ sap_sid|upper }}_DB"
 
   name:                                DB Installation - Oracle
   remote_user:                         "{{ orchestration_ansible_user }}"                
@@ -65,8 +92,17 @@
     - vars/ansible-input-api.yaml                               # API Input template with defaults
 
   tasks:
-  - include_role:
-      name:                            roles-db/4.1.0-ora-install
+
+    - name:                            Setting the DB facts
+      ansible.builtin.set_fact:
+        tier:                          ora                                    # Actions for Oracle DB Servers
+        main_password:                 "{{ hostvars.localhost.sap_password }}"
+      tags:
+        - always
+
+    - name:                            Installing Oracle
+      ansible.builtin.include_role:
+        name:                          roles-db/4.1.0-ora-install
       
 
 

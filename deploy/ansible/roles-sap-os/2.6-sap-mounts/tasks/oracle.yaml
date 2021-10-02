@@ -44,7 +44,7 @@
                                        {%- if lv_parts| length == 2 -%}
                                        {%- set _path = '/' ~ lv_parts[-1] -%}
                                        {%- else -%}
-                                       {%- set _path = ['/' ~ lv_parts[-2], db_sid | upper, lv_parts[-1]] | join('/') -%}
+                                       {%- set _path = ['/' ~ lv_parts[-2], sap_sid | upper, lv_parts[-1]] | join('/') -%}
                                        {%- endif -%}
                                        {{- _path -}} 
     fstype:                            "{{ item.fstype }}"
@@ -72,7 +72,7 @@
   loop:
     - { tier: 'sapos',          type: 'xfs',     src: '/dev/vg_sap/lv_usrsap',                           path: '/usr/sap' }
     - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/usr/sap/install',               path: '/usr/sap/install' }                # Special Install Structure; Destroy on Completion
-    - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/sapmnt/{{ db_sid|upper }}',  path: '/sapmnt/{{ db_sid|upper }}' }
+    - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/sapmnt/{{ sap_sid|upper }}',  path: '/sapmnt/{{ sap_sid|upper }}' }
   
   when:         
     item.tier in ["sapos","ora"]
@@ -80,10 +80,17 @@
 # ORASID should be the owner of the file systems /oracle directories. 
 #.PARAMS folder is not required for oracle install as we are not passing any parameters files.
 
+
 - name:                                "ORACLE: Make orasid:dba as owners"          
-  ansible.builtin.shell: | 
-                                       chown -R oracle:oinstall /oracle
-                                       chmod -R 777 /usr/sap/install/
+  ansible.builtin.file:
+    path:                              "{{ item.path }}"
+    state:                             directory
+    owner:                             "{{ item.owner }}"
+    group:                             "{{ item.group }}"
+    mode:                              0777
+  loop:
+    - { path: '/oracle',          group: 'oinstall',   owner: 'oracle'}
+    - { path: '/usr/sap/install', group: 'oinstall',   owner: 'oracle'}
 
 
 #Debug for testing
