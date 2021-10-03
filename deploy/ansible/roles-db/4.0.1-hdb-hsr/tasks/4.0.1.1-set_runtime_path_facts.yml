@@ -24,13 +24,6 @@
     path_xsa_ssfs_dat:                 "{{ hana_global_dir }}/xsa/security/ssfs/data/SSFS_{{ db_sid | upper }}.DAT"
     path_xsa_ssfs_key:                 "{{ hana_global_dir }}/xsa/security/ssfs/key/SSFS_{{ db_sid | upper }}.KEY"
 
-# Deprecating this task - By default the HANA backup dir is /hana/backup
-#- name: HSR - Determine path of db_sid backup directory from hdb_sizes.json
-#  ansible.builtin.set_fact:
-#    db_sid_backup_dir: "{{ item.mount_point }}/{{ db_sid | upper }}"
-#  loop: "{{ hdb_disks }}"
-#  when: item.name == "backup"
-
 - name:                                HSR - Ensure HANA backup file names are set
   ansible.builtin.set_fact:
     backup_file_for_systemdb_full_path: "{{ db_sid_backup_dir }}/INITIAL_SYSTEMDB_BACKUP"

@@ -8,7 +8,7 @@
 
 
 - name:                                HSR - Ensure backup directory exists for HANA database with System Identifier {{ db_sid }}
-  file:
+  ansible.builtin.file:
     path:                              "{{ db_sid_backup_dir }}"
     state:                             directory
     owner:                             "{{ db_sid_admin_user }}"
