@@ -41,12 +41,21 @@
                                        source ~/.bashrc ;
                                        {{ hdbnsutil_command }} -sr_state
   register:                            hana_replication_status
-  changed_when: false
-  failed_when: false
+  changed_when:                        false
+  failed_when:                         false
+
+- name:                                HSR - Debug replication status is known
+  ansible.builtin.debug:
+    msg:                               "{{ hana_replication_status.stdout_lines }}"    
+    verbosity:                         2
 
 - name:                                HSR - Ensure current replication status is known
   ansible.builtin.set_fact:
-    hana_system_replication_enabled:   "{{ 'mode: none' not in hana_replication_status.stdout }}"
+    hana_system_replication_enabled:   "{{ 'online: true' in hana_replication_status.stdout }}"
+
+- name:                                HSR - Debug replication status 
+  ansible.builtin.debug:
+    var:                               hana_system_replication_enabled
 
 - name:                                HSR - Check on the primary node whether installed HANA is single container or multi-container
   # If HSR is already enabled, we cannot read from the secondary node

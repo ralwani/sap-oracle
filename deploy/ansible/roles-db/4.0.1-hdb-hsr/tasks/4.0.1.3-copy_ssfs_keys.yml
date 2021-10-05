@@ -8,6 +8,7 @@
 
 
 - name:                                HSR - Ensure the Primary node SSFS files are present on the primary node
+  when:                            ansible_hostname == primary_instance_name
   block:
 
     - name:                            HSR - Ensure the Primary node SSFS_{{ hdb_db_sid | upper }}.DAT file exists
@@ -22,8 +23,7 @@
         path:                          "{{ path_ssfs_key }}"
       register:                        primary_key_file_result
       failed_when:                     primary_key_file_result.failed
-  when:                                ansible_hostname == primary_instance_name
-
+      
 - name:                                HSR - Ensure the Primary node XSA SSFS_{{ db_sid | upper }}.DAT file exists
   ansible.builtin.stat:
     path:                              "{{ path_xsa_ssfs_dat }}"
@@ -70,4 +70,5 @@
           vars:
             ssfs_file_path:            "{{ path_xsa_ssfs_key }}"
       when:                            xsa_installed
+
   when: not hana_system_replication_enabled

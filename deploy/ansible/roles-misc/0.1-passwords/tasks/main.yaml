@@ -7,7 +7,7 @@
 
 - name:                                Construct SAP system password secret name
   ansible.builtin.set_fact:
-    sap_password_id:                   "{{ secret_prefix }}-{{ sap_sid }}-sap-passwordz"
+    sap_password_id:                   "{{ secret_prefix }}-{{ sap_sid }}-sap-password"
 
 - name:                                "Create Password secret"
   ansible.builtin.command:             az keyvault secret set --vault-name {{ kv_name }} --name {{ sap_password_id }} --value "{{ main_password }}"

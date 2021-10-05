@@ -31,13 +31,13 @@
 
 - name:                                HSR - Ensure the Primary node SSFS files are present on the primary node
   block:
-    - name:                            HSR - Ensure the Primary node SSFS_{{ db_sid | upper }}.DAT file exists
+    - name:                            "HSR - Ensure the Primary node SSFS_{{ db_sid | upper }}.DAT file exists"
       ansible.builtin.stat:
         path:                          "{{ path_ssfs_dat }}"
       register:                        primary_dat_file_result
       failed_when:                     primary_dat_file_result.failed
 
-    - name:                            HSR - Ensure the Primary node SSFS_{{ db_sid | upper }}.KEY file exists
+    - name:                            "HSR - Ensure the Primary node SSFS_{{ db_sid | upper }}.KEY file exists"
       ansible.builtin.stat:
         path:                          "{{ path_ssfs_key }}"
       register:                        primary_key_file_result
