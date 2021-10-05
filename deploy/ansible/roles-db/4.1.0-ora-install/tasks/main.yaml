@@ -93,7 +93,7 @@
 - name:                            Create rootscripstexecuted.txt
   ansible.builtin.file:
     path:                          /oracle/{{db_sid|upper }}/19.0.0/bin/oracle
-    state:                         directory
+    state:                         file
     mode:                          6751
 
 - name:                            Create rootscripstexecuted.txt
