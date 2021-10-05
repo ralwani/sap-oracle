@@ -10,10 +10,16 @@
     cdpy
     (python systemReplicationStatus.py; echo) | grep -q 'overall system replication status: ACTIVE'
   register:                            grep_result
-  until:                               grep_result.rc == 0
+  until:                               grep_result.rc == 0 or grep_result.rc == 1
+  failed_when:                         grep_result.rc != 0 and grep_result.rc != 1
   changed_when:                        false
-  retries:                             30
-  delay:                               30
+  retries:                             10
+  delay:                               5
   when:                                ansible_hostname == primary_instance_name
   tags:
     - skip_ansible_lint
+
+- name:                                HSR - Debug replication
+  ansible.builtin.debug:
+    var:                               grep_result
+    verbosity:                         2

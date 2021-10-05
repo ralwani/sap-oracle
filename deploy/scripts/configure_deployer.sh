@@ -492,9 +492,6 @@ az login --identity --output none
 #
 echo '# Configure environment settings for deployer interactive sessions' | sudo tee /etc/profile.d/deploy_server.sh
 
-# Add new /opt bin directories to start of PATH to ensure the versions we installed
-# are preferred over any installed standard system versions.
-echo export "PATH=${ansible_bin}:${tf_bin}:"'${PATH}' | sudo tee -a /etc/profile.d/deploy_server.sh
 
 # Set env for ansible
 echo export ANSIBLE_HOST_KEY_CHECKING=False | sudo tee -a /etc/profile.d/deploy_server.sh
@@ -513,6 +510,11 @@ fi
 
 echo export ARM_SUBSCRIPTION_ID=${subscription_id} | sudo tee -a /etc/profile.d/deploy_server.sh
 echo export DEPLOYMENT_REPO_PATH=$HOME/Azure_SAP_Automated_Deployment/sap-hana | sudo tee -a /etc/profile.d/deploy_server.sh
+
+# Add new /opt bin directories to start of PATH to ensure the versions we installed
+# are preferred over any installed standard system versions.
+echo export "PATH=${ansible_bin}:${tf_bin}:"'${PATH}':$HOME/Azure_SAP_Automated_Deployment/sap-hana/deploy/scripts | sudo tee -a /etc/profile.d/deploy_server.sh
+
 
 # Ensure that the user's account is logged in to Azure with specified creds
 echo az login --identity --output none | sudo tee -a /etc/profile.d/deploy_server.sh

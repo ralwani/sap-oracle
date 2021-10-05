@@ -393,14 +393,14 @@
     - tier == 'sapos'
     - node_tier =='hana'
 
+- name:                               "ANF Mount: Ensure the Autofs service is restarted"
+  ansible.builtin.systemd:
+    name:                             autofs
+    state:                            restarted
+
 - name:                               "ANF Mount: Ensure the NFS service is restarted"
   ansible.builtin.systemd:
     name:                             "{{ nfs_service }}"
     state:                             restarted
   when:
     - node_tier == 'scs'
-
-- name:                               "ANF Mount: Ensure the Autofs service is restarted"
-  ansible.builtin.systemd:
-    name:                             autofs
-    state:                            restarted

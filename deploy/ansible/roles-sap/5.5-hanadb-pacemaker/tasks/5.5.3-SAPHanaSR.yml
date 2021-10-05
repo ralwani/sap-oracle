@@ -71,7 +71,7 @@
         group:                         sapsys
 
     - name:                            Stop HANA Database
-      import_tasks:                    ../../../roles-misc/0.4-helpers/04.02-stop_hana.yml
+      import_tasks:                    ../../../roles-misc/0.4-helpers/tasks/04.02-stop_hana.yml
 
     - name:                            Adjust global.ini on each cluster node
       ansible.builtin.blockinfile:
@@ -86,7 +86,7 @@
 
 
     - name:                           Start HANA Database
-      import_tasks:                   ../../../roles-misc/0.4-helpers/04.01-start_hana.yml
+      import_tasks:                   ../../../roles-misc/0.4-helpers/tasks/04.01-start_hana.yml
 
 
 # End of configuration for SAPHanaSR python hook
