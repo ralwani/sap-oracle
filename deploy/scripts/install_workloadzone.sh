@@ -169,6 +169,8 @@ fi
 
 ext=$(echo ${workload_file_parametername} | cut -d. -f2)
 
+private_link_used=false
+
 # Helper variables
 if [ "${ext}" == json ]; then
     environment=$(jq --raw-output .infrastructure.environment "${parameterfile}")
@@ -176,6 +178,7 @@ if [ "${ext}" == json ]; then
 else
     load_config_vars "${param_dirname}"/"${parameterfile}" "environment"
     load_config_vars "${param_dirname}"/"${parameterfile}" "location"
+    private_link_used=$(grep  "use_private_endpoint=" "${param_dirname}"/"${parameterfile}" |  cut -d'=' -f2 | tr -d '"')
     region=$(echo ${location} | xargs)
 fi
 
@@ -714,6 +717,19 @@ if [ 0 == $return_value ] ; then
     then
         rm plan_output.log
     fi
+
+    if [ "$private_link_used" == "true" ]; then
+        echo "#########################################################################################"
+        echo "#                                                                                       #"
+        echo -e "#                             $cyan Configuring Private Link $resetformatting                                #" 
+        echo "#                                                                                       #"
+        echo "#########################################################################################"
+        echo ""
+
+        app_subnet_id=$(terraform -chdir="${terraform_module_directory}" output app_subnet_id| tr -d \")
+        az storage account network-rule add -g $REMOTE_STATE_RG --account-name $REMOTE_STATE_SA   --subnet $app_subnet_id  --only-show-errors  --output none
+
+    fi
     
     unset TF_DATA_DIR
     exit $return_value
@@ -772,6 +788,23 @@ fi
 return_value=0
 landscape_tfstate_key=${key}.terraform.tfstate
 save_config_var "landscape_tfstate_key" "${workload_config_information}"
+
+
+if [ 0 == $return_value ] ; then
+    if [ "$private_link_used" == "true" ]; then
+        echo "#########################################################################################"
+        echo "#                                                                                       #"
+        echo -e "#                             $cyan Configuring Private Link $resetformatting                                #" 
+        echo "#                                                                                       #"
+        echo "#########################################################################################"
+        echo ""
+
+        app_subnet_id=$(terraform -chdir="${terraform_module_directory}" output app_subnet_id| tr -d \")
+        az storage account network-rule add -g $REMOTE_STATE_RG --account-name $REMOTE_STATE_SA   --subnet $app_subnet_id  --only-show-errors  --output none
+
+    fi
+
+fi
 
 unset TF_DATA_DIR
 

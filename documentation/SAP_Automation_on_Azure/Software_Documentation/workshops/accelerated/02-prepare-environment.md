@@ -130,7 +130,7 @@
         }
       },
       "options": {
-        "enable_deployer_public_ip"           : true
+        "deployer_enable_public_ip"           : true
       },
       "firewall_deployment"                   : true,
       "enable_purge_control_for_keyvaults"    : false
@@ -139,7 +139,7 @@
     ```
     <br/>
     
-    For a deployment to *westeurope* use this:
+    For a deployment to **westeurope** use this:
 
     ```bash
     mkdir -p ~/Azure_SAP_Automated_Deployment/WORKSPACES/DEPLOYER/DEMO-WEEU-DEP00-INFRASTRUCTURE; cd $_
@@ -163,7 +163,7 @@
         }
       },
       "options": {
-        "enable_deployer_public_ip"           : true
+        "deployer_enable_public_ip"           : true
       },
       "firewall_deployment"                   : true,
       "enable_purge_control_for_keyvaults"    : false
@@ -193,7 +193,7 @@
     ```
     <br/>
     
-    For a deployment to *westeurope* use this:
+    For a deployment to **westeurope** use this:
     
     ```bash
     mkdir -p ~/Azure_SAP_Automated_Deployment/WORKSPACES/LIBRARY/DEMO-WEEU-SAP_LIBRARY; cd $_
@@ -231,7 +231,9 @@
     ```
 
     <br/>
-    For a deployment to *westeurope* use this:
+    
+    For a deployment to **westeurope** use this:
+    
     
     ```bash
     ${DEPLOYMENT_REPO_PATH}/deploy/scripts/validate.sh --parameterfile DEPLOYER/DEMO-WEEU-DEP00-INFRASTRUCTURE/DEMO-WEEU-DEP00-INFRASTRUCTURE.json \
@@ -249,7 +251,9 @@
         --auto-approve
     ```
     <br/>
-    For a deployment to *westeurope* use this:
+    
+    
+
 
     ```bash
     ${DEPLOYMENT_REPO_PATH}/deploy/scripts/prepare_region.sh                                                   \
@@ -267,8 +271,6 @@
           - SPN Tenant ID:
           - SPN Subscription:
 
-
-For a deployment to *westeurope* use this:
     
     Execute
     ```bash
@@ -287,7 +289,7 @@ For a deployment to *westeurope* use this:
         --auto-approve
     ```
 
-For a deployment to *westeurope* use this:
+For a deployment to **westeurope** use this:
     
         ```bash
     subscription=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
