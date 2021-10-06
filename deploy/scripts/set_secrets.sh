@@ -221,6 +221,7 @@ if [ -n "${result}" ]; then
     az keyvault set-policy -n "${keyvault}" --secret-permissions get list recover restore set --upn "${upn}"
 fi
 
+echo -e "\t $cyan Setting secret ${secretname} in keyvault ${keyvault} $resetformatting \n"
 az keyvault secret set --name "${secretname}" --vault-name "${keyvault}" --value "${subscription}" >stdout.az 2>&1
 
 result=$(grep "ERROR: The user, group or application" stdout.az)

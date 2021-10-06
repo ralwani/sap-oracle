@@ -37,7 +37,7 @@ function showhelp {
     echo "#      -d or --deployer_tfstate_key          Deployer terraform state file name         #"
     echo "#      -e or --deployer_environment          Deployer environment, i.e. MGMT            #"
     echo "#      -s or --subscription                  subscription                               #"
-    echo "#      -s or --subscription                  subscription                               #"
+    echo "#      -k or --state_subscription            subscription for statefile                 #"
     echo "#      -c or --spn_id                        SPN application id                         #"
     echo "#      -p or --spn_secret                    SPN password                               #"
     echo "#      -t or --tenant_id                     SPN Tenant id                              #"
@@ -240,18 +240,49 @@ var_file="${param_dirname}"/"${parameterfile}"
 
 if [ ! -z $subscription ]
 then
-    save_config_var "subscription" "${workload_config_information}"
+    if is_valid_guid "subscription" ; then
+      save_config_var "subscription" "${workload_config_information}"
+    else
+        printf -v val %-40.40s "$subscription"
+        echo "#########################################################################################"
+        echo "#                                                                                       #"
+        echo -e "#   The provided subscription is not valid:$boldred ${val} $resetformatting#   "
+        echo "#                                                                                       #"
+        echo "#########################################################################################"
+        exit 65
+    fi
 fi
 
 if [ ! -z $STATE_SUBSCRIPTION ]
 then
     echo "Saving the state subscription"
-    save_config_var "STATE_SUBSCRIPTION" "${workload_config_information}"
+    if is_valid_guid "STATE_SUBSCRIPTION" ; then
+      save_config_var "STATE_SUBSCRIPTION" "${workload_config_information}"
+    else
+        printf -v val %-40.40s "$STATE_SUBSCRIPTION"
+        echo "#########################################################################################"
+        echo "#                                                                                       #"
+        echo -e "#The provided state_subscription is not valid:$boldred ${val} $resetformatting#"
+        echo "#                                                                                       #"
+        echo "#########################################################################################"
+        exit 65
+    fi
+    
 fi
 
 if [ ! -z $client_id ]
 then
-    save_config_var "client_id" "${workload_config_information}"
+    if is_valid_guid "client_id" ; then
+      save_config_var "client_id" "${workload_config_information}"
+    else
+        printf -v val %-40.40s "$client_id"
+        echo "#########################################################################################"
+        echo "#                                                                                       #"
+        echo -e "#         The provided spn_id is not valid:$boldred ${val} $resetformatting   #"
+        echo "#                                                                                       #"
+        echo "#########################################################################################"
+        exit 65
+    fi
 fi
 
 if [ ! -z $keyvault ]
@@ -261,7 +292,18 @@ fi
 
 if [ ! -z $tenant_id ]
 then
-    save_config_var "tenant_id" "${workload_config_information}"
+    if is_valid_guid "tenant_id" ; then
+      save_config_var "tenant_id" "${workload_config_information}"
+    else
+        printf -v val %-40.40s "$tenant_id"
+        echo "#########################################################################################"
+        echo "#                                                                                       #"
+        echo -e "#       The provided tenant_id is not valid:$boldred ${val} $resetformatting  #"
+        echo "#                                                                                       #"
+        echo "#########################################################################################"
+        exit 65
+    fi
+    
 fi
 
 if [ ! -z $REMOTE_STATE_SA ]

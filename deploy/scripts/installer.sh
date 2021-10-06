@@ -270,7 +270,19 @@ if [ -z "$STATE_SUBSCRIPTION" ];
 then
   load_config_vars "${system_config_information}" "STATE_SUBSCRIPTION"
 else
-  save_config_vars "${system_config_information}" STATE_SUBSCRIPTION
+    echo "Saving the state subscription"
+    if is_valid_guid "STATE_SUBSCRIPTION" ; then
+        save_config_var "STATE_SUBSCRIPTION" "${workload_config_information}"
+    else
+        printf -v val %-40.40s "$STATE_SUBSCRIPTION"
+        echo "#########################################################################################"
+        echo "#                                                                                       #"
+        echo -e "#The provided state_subscription is not valid:$boldred ${val} $resetformatting#"
+        echo "#                                                                                       #"
+        echo "#########################################################################################"
+        exit 65
+    fi
+
 fi
 
 echo "Terraform storage " "${REMOTE_STATE_SA}"
