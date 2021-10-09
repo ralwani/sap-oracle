@@ -1,8 +1,18 @@
 # This is the SAP library’s storage account for sap binaries
-saplib="xxxxxxsaplib###"
+if [ ! -n "${SAP_LIBRARY_TF}" ] ;then
+  read -p "Please provide the terraform state storage account from SAP_LIBRARY? "  saplib
+else
+  saplib="${SAP_LIBRARY_TF}"
+fi
+
+
 
 # This is the deployer keyvault
-kv_name="xxxxxdep00user###"
+if [ ! -n "${SAP_LIBRARY_TF}" ] ;then
+  read -p "Please provide the Deployer keyvault name? "  kv_name
+else
+  kv_name="xxxxxdep00user###"
+fi
 
 end=`date -u -d "90 days" '+%Y-%m-%dT%H:%MZ'`
 

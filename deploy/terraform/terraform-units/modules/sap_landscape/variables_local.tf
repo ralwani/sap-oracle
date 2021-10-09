@@ -68,7 +68,7 @@ locals {
 
   // Region and metadata
   region = var.infrastructure.region
-  prefix = length(try(var.infrastructure.resource_group.name, "")) > 0 ? substr(var.infrastructure.resource_group.name, 0, 8) : trimspace(var.naming.prefix.VNET)
+  prefix = length(try(var.infrastructure.resource_group.name, "")) > 0 ? var.infrastructure.resource_group.name : trimspace(var.naming.prefix.VNET)
 
   vnet_mgmt_id = try(var.deployer_tfstate.vnet_mgmt_id, try(var.deployer_tfstate.vnet_mgmt.id, ""))
   firewall_ip  = try(var.deployer_tfstate.firewall_ip, "")

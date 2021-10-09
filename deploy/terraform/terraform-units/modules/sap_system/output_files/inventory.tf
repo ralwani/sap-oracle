@@ -204,7 +204,7 @@ resource "local_file" "sap-parameters_yml" {
     bom           = local.bom
     sap_mnt       = length(trimspace(var.sap_mnt)) > 0 ? format("sap_mnt:                       %s", var.sap_mnt) : ""
     sap_transport = length(trimspace(var.sap_transport)) > 0 ? format("sap_trans:                     %s", var.sap_transport) : ""
-    platform      = lower(length(local.hdb_vms) > 0 ? "HANA" : upper(local.anydb_vms[0].platform))
+    platform      = length(local.hdb_vms) > 0 ? "HANA" : upper(local.anydb_vms[0].platform)
     }
   )
   filename             = format("%s/sap-parameters.yaml", path.cwd)

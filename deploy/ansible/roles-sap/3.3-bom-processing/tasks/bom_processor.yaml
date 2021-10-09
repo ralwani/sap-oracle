@@ -94,6 +94,7 @@
                                        {% if item.filename is undefined %}{{ item.archive }}{% else %}{{ item.filename }}{% endif %}"
     mode:                              "{% if item.permissions is undefined %}0644{% else %}{{ item.permissions }}{% endif %}"
     tmp_dest:                          '/mnt/resource'
+    validate_certs:                    true
   register:                            result
   until:                               result is succeeded
   retries:                             2

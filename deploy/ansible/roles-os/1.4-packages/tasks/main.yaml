@@ -14,6 +14,12 @@
     var:                               tier
     verbosity:                         2
 
+- name:                                "1.4 - Update OS packages: {{ distro_name }}"
+  ansible.builtin.shell:               "zypper -n install python-xml"
+  when:
+    - distro_id == "suse15"
+
+
 # Analyse the package list for this distribution selecting only those
 # packages assigned to the active tier or 'all'.
 - name:                                "Determine packages appropriate for tier on: {{ distro_id }}"
