@@ -125,10 +125,11 @@ packages:
     - { tier: 'ha',    package: 'fence-agents-azure-arm',                                   state: 'present' }
   redhat8.2:
     - { tier: 'ha',    package: 'fence-agents-azure-arm',                                   state: 'present' }
+  redhat8.4:
+    - { tier: 'ha',    package: 'fence-agents-azure-arm',                                   state: 'present' }
   suse12:
     - { tier: 'os',    package: 'chrony',                                                   state: 'present' }
     - { tier: 'os',    package: 'glibc',                                                    state: 'present' }
-    - { tier: 'os',    package: 'jq',                                                       state: 'present' }
     - { tier: 'os',    package: 'libyui-qt-pkg7',                                           state: 'present' }
     - { tier: 'os',    package: 'numad',                                                    state: 'present' }
     - { tier: 'os',    package: 'ntp',                                                      state: 'absent' }
