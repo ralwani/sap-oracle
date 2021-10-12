@@ -8,14 +8,14 @@ fi
 
 
 # This is the deployer keyvault
-if [ ! -n "${SAP_LIBRARY_TF}" ] ;then
+if [ ! -n "${SAP_KV_TF}" ] ;then
   read -p "Please provide the Deployer keyvault name? "  kv_name
 else
-  kv_name="xxxxxdep00user###"
+  kv_name="${SAP_KV_TF}"
 fi
 
 end=`date -u -d "90 days" '+%Y-%m-%dT%H:%MZ'`
 
-sas=$(az storage account generate-sas --permissions rpl --account-name $saplib --services b --resource-types sco --expiry $end -o tsv)
+sas=?$(az storage account generate-sas --permissions rpl --account-name $saplib --services b --resource-types sco --expiry $end -o tsv)
 
-az keyvault secret set --vault-name $kv_name --name "sapbits-sas-token" --value ?$sas
+az keyvault secret set --vault-name $kv_name --name "sapbits-sas-token" --value  "${sas}"

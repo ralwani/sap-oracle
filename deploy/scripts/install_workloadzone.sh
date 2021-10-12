@@ -493,7 +493,8 @@ then
                 vaultParams=$(printf " --vault %s" "${keyvault}" )
                 echo $vaultParams
 
-                allParams=$(printf " %s %s %s" "${envParams}" "${regParams}" "${vaultParams}" )
+                
+                allParams=("${envParams}" "${regParams}" "${vaultParams}")
 
                 echo $allParams
 
