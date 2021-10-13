@@ -83,6 +83,15 @@
   loop:       "{{ bom.materials.media|flatten(levels=1) }}"
 # ------------------</DEBUGGING>------------------
 
+- name:                                "BOM: Set Python version {{ distro_id }}"
+  ansible.builtin.set_fact:
+    python_version:                    'python2'
+
+- name:                                "BOM: Set Python version {{ distro_id }}"
+  ansible.builtin.set_fact:
+    python_version:                    'python3'
+  when:                                "'suse15' == distro_id"
+
 
 #   04) Download media from bom
 # Loop throough BOM media files and download to correct location
@@ -101,6 +110,8 @@
   delay:                               5
   loop:                                "{{ bom.materials.media|flatten(levels=1) }}"
   when:                                item.download is undefined or item.download
+  vars:
+    ansible_python_interpreter:        "{{ python_version }}"
 
 
 #   05) Extract files - SAPCAR
