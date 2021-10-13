@@ -51,14 +51,19 @@
 
 - name:                                HSR - Ensure current replication status is known
   ansible.builtin.set_fact:
-    hana_system_replication_enabled:   "{{ 'online: true' in hana_replication_status.stdout }}"
+    hana_system_replication_enabled:   "{{ 'mode: primary' in hana_replication_status.stdout }}"
+  when:                                ansible_hostname == primary_instance_name
+
+- name:                                HSR - Ensure current replication status is known
+  ansible.builtin.set_fact:
+    hana_system_replication_enabled:   "{{ 'mode: none' in hana_replication_status.stdout }}"
+  when:                                ansible_hostname == secondary_instance_name
 
 - name:                                HSR - Debug replication status 
   ansible.builtin.debug:
     var:                               hana_system_replication_enabled
 
 - name:                                HSR - Check on the primary node whether installed HANA is single container or multi-container
-  # If HSR is already enabled, we cannot read from the secondary node
   block:
     - name:                            HSR - Check whether HANA has been installed as a single container (no SYSTEMDB)
       become_user:                     "{{ db_sid_admin_user }}"
@@ -88,7 +93,9 @@
       # At the moment it's sufficient to check for a missing SYSTEMDB, since the
       # code will cope with a missing tenant DB.
       when: not hana_has_system_db
-  when: ansible_hostname == primary_instance_name or not hana_system_replication_enabled
+  when: 
+    - ansible_hostname == primary_instance_name
+    - not hana_system_replication_enabled
 
 - name:                                HSR - Check that HANA DB SYSTEM user can access the SYSTEM database
   # If HSR is already enabled, we cannot read from the secondary node
@@ -97,7 +104,9 @@
                                        source ~/.bashrc ;
                                        {{ hdbsql_systemdb_command }} '{{ dummy_cmd }}'
   changed_when: false
-  when: (ansible_hostname == primary_instance_name) or not hana_system_replication_enabled
+  when: 
+  - ansible_hostname == primary_instance_name
+  - not hana_system_replication_enabled
 
 - name:                                HSR - Check that HANA DB SYSTEM user can access the tenant database {{ hana_tenant_database_name }}
   # If HSR is already enabled, we cannot read from the secondary node
@@ -108,7 +117,8 @@
   changed_when:                        false
   when:
     - hana_has_tenant_db is defined and hana_has_tenant_db
-    - (ansible_hostname == primary_instance_name) or not hana_system_replication_enabled
+    - ansible_hostname == primary_instance_name 
+    - not hana_system_replication_enabled
 
 - name:                                HSR - Check HANA log mode is set to normal
   # If HSR is already enabled, we cannot read from the secondary node
@@ -119,6 +129,8 @@
   register:                            log_mode_status
   failed_when:                         log_mode_status.rc != 0 or ("normal" not in log_mode_status.stdout)
   changed_when:                        false
-  when: (ansible_hostname == primary_instance_name) or not hana_system_replication_enabled
+  when: 
+    - ansible_hostname == primary_instance_name
+    - not hana_system_replication_enabled
   tags:
     - skip_ansible_lint
