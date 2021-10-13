@@ -132,7 +132,7 @@
         },
         "S4Demo": {
             "compute": {
-                "vm_size"                      : "Standard_E32ds_v4",
+                "vm_size"                      : "Standard_E20ds_v4",
                 "accelerated_networking"       : false
             },
             "storage": [
