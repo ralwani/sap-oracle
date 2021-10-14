@@ -1,6 +1,0 @@
----
-- name: call config check
-  hosts: localhost
-  tasks:
-          - name: call the python script to check the Azure configuration for terraform and ansible
-            command: python ../ConfigurationCheck/configCheck.py
