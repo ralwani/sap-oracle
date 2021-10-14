@@ -14,9 +14,9 @@
 # - landscape_tfstate_key is the state file name for the workload deployment
 # These are required parameters, if using the deployment scripts they will be auto populated otherwise they need to be entered
 
-tfstate_resource_id  = null
-deployer_tfstate_key  = null
-landscape_tfstate_key= null
+#tfstate_resource_id   = null
+#deployer_tfstate_key  = null
+#landscape_tfstate_key = null
 
 #########################################################################################
 #                                                                                       #
@@ -28,13 +28,13 @@ landscape_tfstate_key= null
 environment="DEV"
 
 # The location valus is a mandatory field, it is used to control where the resources are deployed
-location="northeurope"
+location="uksouth"
 
 # RESOURCEGROUP
 # The two resource group name and arm_id can be used to control the naming and the creation of the resource group
 # The resource_group_name value is optional, it can be used to override the name of the resource group that will be provisioned
 # The resource_group_name arm_id is optional, it can be used to provide an existing resource group for the deployment
-resource_group_name="dev-noeu-sap-x00"
+#resource_group_name=""
 #resource_group_arm_id=""
 
 # PPG
@@ -60,9 +60,8 @@ resource_group_name="dev-noeu-sap-x00"
 # for the brownfield scenario the Azure resource identifier for the subnet must be specified
 
 # The network logical name is mandatory - it is used in the naming convention and should map to the workload virtual network logical name 
-#network_name="dev-noeu-sap-vnet"
-network_logical_name = "SAP01"
-
+network_name="SAP02"
+network_logical_name = "SAP"
 # ADMIN subnet
 # If defined these parameters control the subnet name and the subnet prefix
 # admin_subnet_name is an optional parameter and should only be used if the default naming is not acceptable 
@@ -71,12 +70,12 @@ network_logical_name = "SAP01"
 # admin_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
 #admin_subnet_address_prefix="10.1.1.0/24"
 # admin_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#admin_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-NOEU-SAP01-vnet/subnets/DEV-NOEU-SAP01-subnet_admin"
+#admin_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-UKSO-SAP01-vnet/subnets/DEV-UKSO-SAP01-subnet_admin"
 
 # admin_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
 #admin_subnet_nsg_name=""
 # admin_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#admin_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-NOEU-SAP01_adminSubnet-nsg"
+#admin_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-UKSO-SAP01_adminSubnet-nsg"
 
 # DB subnet
 # If defined these parameters control the subnet name and the subnet prefix
@@ -87,13 +86,13 @@ network_logical_name = "SAP01"
 #db_subnet_address_prefix="10.1.2.0/24"
 
 # db_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#db_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-NOEU-SAP01-vnet/subnets/DEV-NOEU-SAP01-subnet_db"
+#db_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-UKSO-SAP01-vnet/subnets/DEV-UKSO-SAP01-subnet_db"
 
 # db_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
 #db_subnet_nsg_name=""
 
 # db_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#db_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-NOEU-SAP01_dbSubnet-nsg"
+#db_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-UKSO-SAP01_dbSubnet-nsg"
 
 
 # APP subnet
@@ -105,13 +104,13 @@ network_logical_name = "SAP01"
 #app_subnet_address_prefix="10.1.3.0/24"
 
 # app_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#app_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-NOEU-SAP01-vnet/subnets/DEV-NOEU-SAP01-subnet_app"
+#app_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-UKSO-SAP01-vnet/subnets/DEV-UKSO-SAP01-subnet_app"
 
 # app_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
 #app_subnet_nsg_name=""
 
 # app_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#app_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-NOEU-SAP01_appSubnet-nsg"
+#app_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-UKSO-SAP01_appSubnet-nsg"
 
 # WEB subnet
 # If defined these parameters control the subnet name and the subnet prefix
@@ -122,41 +121,19 @@ network_logical_name = "SAP01"
 #web_subnet_address_prefix="10.1.4.0/24"
 
 # web_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#web_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-NOEU-SAP01-vnet/subnets/DEV-NOEU-SAP01-subnet_web"
+#web_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-UKSO-SAP01-vnet/subnets/DEV-UKSO-SAP01-subnet_web"
 
 # web_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
 #web_subnet_nsg_name=""
 
 # web_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#web_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-NOEU-SAP01_webSubnet-nsg"
+#web_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-UKSO-SAP01_webSubnet-nsg"
 
 #########################################################################################
 #                                                                                       #
 #  Database tier                                                                        #                                                                                       #
 #                                                                                       #
 #########################################################################################
-
-# database_platform defines the database backend, supported values are
-# - HANA
-# - DB2
-# - ORACLE
-# - ASE
-# - SQLSERVER
-# - NONE (in this case no database tier is deployed)
-database_platform="HANA"
-
-# database_high_availability is a boolean flag controlling if the database tier is deployed highly available (more than 1 node)
-#database_high_availability=false
-
-# For M series VMs use the SKU name for instance "M32ts"
-# If using a custom disk sizing populate with the node name for Database you have used in the file db_disk_sizes_filename
-database_size="S4Demo"
-
-#If you want to customise the disk sizes for database VMs use the following parameter to specify the custom sizing file.
-#db_disk_sizes_filename="custom-sizing.json"
-
-# database_vm_use_DHCP is a boolean flag controlling if Azure subnet provided IP addresses should be used (true)
-database_vm_use_DHCP=true
 
 # The vm_image defines the Virtual machine image to use, 
 # if source_image_id is specified the deployment will use the custom image provided, 
@@ -178,8 +155,8 @@ database_vm_image={
   os_type=""
   source_image_id=""
   publisher="SUSE"
-  offer="sles-sap-12-sp5"
-  sku="gen1"
+  offer="sles-sap-15-sp1"
+  sku="gen2"
   version="latest"
 }
 
@@ -192,6 +169,28 @@ database_vm_image={
 #   sku="82sapha-gen2"
 #   version="8.2.2021040902"
 # }
+
+# database_platform defines the database backend, supported values are
+# - HANA
+# - DB2
+# - ORACLE
+# - ASE
+# - SQLSERVER
+# - NONE (in this case no database tier is deployed)
+database_platform="HANA"
+
+# database_high_availability is a boolean flag controlling if the database tier is deployed highly available (more than 1 node)
+#database_high_availability=false
+
+# If using a custom disk sizing populate with the node name for Database you have used in the file db_disk_sizes_filename
+# For M series VMs use the SKU name for instance "M32ts"
+database_size="S4Demo"
+
+#If you want to customise the disk sizes for database VMs use the following parameter to specify the custom sizing file.
+#db_disk_sizes_filename="custom-sizing.json"
+
+# database_vm_use_DHCP is a boolean flag controlling if Azure subnet provided IP addresses should be used (true)
+database_vm_use_DHCP=true
 
 # database_vm_zones is an optional list defining the availability zones to deploy the database servers
 #database_vm_zones=["1"]
@@ -217,25 +216,18 @@ database_vm_image={
 #database_vm_authentication_type="key"
 
 # Optional, Defines the list of availability sets to deployt the Database VMs in
-#database_vm_avset_arm_ids=[/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-X00/providers/Microsoft.Compute/availabilitySets/DEV-NOEU-X00_db_avset"
-
-# Optional, Defines the that the database virtual machines will not be placed in a proximity placement group
-#database_no_ppg=false
-
-# Optional, Defines the that the database virtual machines will not be placed in an availability set
-#database_no_avset=false
+#database_vm_avsest_arm_ids=[/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-UKSO-SAP01-X00/providers/Microsoft.Compute/availabilitySets/DEV-UKSO-X00_db_avset"
 
 #########################################################################################
 #                                                                                       #
-#  Application tier                                                                        #                                                                                       #
+#  Database tier                                                                        #                                                                                       #
 #                                                                                       #
 #########################################################################################
 # sid is a mandatory field that defines the SAP Application SID
 sid="X00"
 
 app_tier_vm_sizing="Production"
-
-
+use_loadbalancers_for_standalone_deployments = false
 # app_tier_use_DHCP is a boolean flag controlling if Azure subnet provided IP addresses should be used (true)
 app_tier_use_DHCP=true
 # Optional, Defines the default authentication model for the Applicatiuon tier VMs (key/password)
@@ -256,19 +248,10 @@ app_tier_use_DHCP=true
 # Application Servers
 
 # application_server_count defines how many application servers to deploy
-application_server_count=1
+application_server_count=2
 
 # application_server_zones is an optional list defining the availability zones to which deploy the application servers
 #application_server_zones=["1","2","3"]
-
-# application_server_sku, if defined provides the SKU to use for the application servers
-#application_server_sku="Standard_D4s_v3"
-
-# application_server_no_ppg defines the that the application server virtual machines will not be placed in a proximity placement group
-#application_server_no_ppg=false
-
-# application_server_no_avset defines the that the application server virtual machines will not be placed in an availability set
-#application_server_no_avset=false
 
 # application_server_app_nic_ips, if provided provides the static IP addresses 
 # for the network interface cars connected to the application subnet
@@ -277,6 +260,9 @@ application_server_count=1
 # application_server_app_admin_nic_ips, if provided provides the static IP addresses 
 # for the network interface cars connected to the admin subnet
 #application_server_app_admin_nic_ips=[]
+
+# application_server_sku, if defined provides the SKU to use for the application servers
+#application_server_sku="Standard_D4s_v3"
 
 # application_server_tags, if defined provides the tags to be associated to the application servers
 #application_server_tags={},
@@ -288,23 +274,15 @@ application_server_image= {
   os_type=""
   source_image_id=""
   publisher="SUSE"
-  offer="sles-sap-12-sp5"
-  sku="gen1"
+  offer="sles-sap-15-sp1"
+  sku="gen2"
+  version="latest"
 }
 
 # SCS Servers
 
 # scs_server_count defines how many SCS servers to deploy
 scs_server_count=1
-
-# scs_server_sku, if defined provides the SKU to use for the SCS servers
-#scs_server_sku="Standard_D4s_v3"
-
-# scs_server_no_ppg defines the that the SCS virtual machines will not be placed in a proximity placement group
-#scs_server_no_ppg=false
-
-# scs_server_no_avset defines the that the SCS virtual machines will not be placed in an availability set
-#scs_server_no_avset=false
 
 # scs_high_availability is a boolean flag controlling if SCS should be highly available
 scs_high_availability=false
@@ -327,6 +305,8 @@ ers_instance_number="02"
 # for the network interface cars connected to the application subnet
 #scs_server_loadbalancer_ips=[]
 
+# scs_server_sku, if defined provides the SKU to use for the SCS servers
+#scs_server_sku="Standard_D4s_v3"
 
 # scs_server_tags, if defined provides the tags to be associated to the application servers
 #scs_server_tags={},
@@ -365,12 +345,6 @@ webdispatcher_server_count=0
 # webdispatcher_server_sku, if defined provides the SKU to use for the web dispatchers
 #webdispatcher_server_sku="Standard_D4s_v3"
 
-# webdispatcher_server_no_ppg defines the that the Web dispatcher virtual machines will not be placed in a proximity placement group
-#webdispatcher_server_no_ppg=false
-
-#webdispatcher_server_no_avset defines the that the Web dispatcher virtual machines will not be placed in an availability set
-#webdispatcher_server_no_avset=false
-
 # webdispatcher_server_tags, if defined provides the tags to be associated to the web dispatchers
 #webdispatcher_server_tags={},
 
@@ -387,7 +361,7 @@ webdispatcher_server_count=0
 # offer="sles-sap-12-sp5"
 # sku="gen1"
 #}
-use_loadbalancers_for_standalone_deployments = false
+
 #########################################################################################
 #                                                                                       #
 #  Credentials                                                                          #
@@ -411,7 +385,7 @@ use_loadbalancers_for_standalone_deployments = false
 
 # resource_offset can be used to provide an offset for resource naming
 # server#, disk# 
-#resource_offset=1
+resource_offset=1
 
 # vm_disk_encryption_set_id if defined defines the custom encryption key 
 #vm_disk_encryption_set_id=""

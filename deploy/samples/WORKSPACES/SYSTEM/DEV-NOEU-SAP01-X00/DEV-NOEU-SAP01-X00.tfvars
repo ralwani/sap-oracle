@@ -231,9 +231,8 @@ database_vm_image={
 #########################################################################################
 # sid is a mandatory field that defines the SAP Application SID
 sid="X00"
-
 app_tier_vm_sizing="Production"
-
+use_loadbalancers_for_standalone_deployments = false
 
 # app_tier_use_DHCP is a boolean flag controlling if Azure subnet provided IP addresses should be used (true)
 app_tier_use_DHCP=true
@@ -255,7 +254,7 @@ app_tier_use_DHCP=true
 # Application Servers
 
 # application_server_count defines how many application servers to deploy
-application_server_count=3
+application_server_count=2
 
 # application_server_zones is an optional list defining the availability zones to which deploy the application servers
 #application_server_zones=["1","2","3"]
@@ -289,6 +288,7 @@ application_server_image= {
   publisher="SUSE"
   offer="sles-sap-12-sp5"
   sku="gen1"
+  version="latest"
 }
 
 # SCS Servers
