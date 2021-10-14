@@ -28,7 +28,7 @@
 environment="DEV"
 
 # The location valus is a mandatory field, it is used to control where the resources are deployed
-location="westeurope"
+location="northeurope"
 
 # RESOURCEGROUP
 # The two resource group name and arm_id can be used to control the naming and the creation of the resource group
@@ -61,7 +61,7 @@ location="westeurope"
 
 # The network logical name is mandatory - it is used in the naming convention and should map to the workload virtual network logical name 
 network_name="SAP01"
-
+network_logical_name = "SAP"
 # ADMIN subnet
 # If defined these parameters control the subnet name and the subnet prefix
 # admin_subnet_name is an optional parameter and should only be used if the default naming is not acceptable 
@@ -70,12 +70,12 @@ network_name="SAP01"
 # admin_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
 #admin_subnet_address_prefix="10.1.1.0/24"
 # admin_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#admin_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-WEEU-SAP01-vnet/subnets/DEV-WEEU-SAP01-subnet_admin"
+#admin_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-NOEU-SAP01-vnet/subnets/DEV-NOEU-SAP01-subnet_admin"
 
 # admin_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
 #admin_subnet_nsg_name=""
 # admin_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#admin_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-WEEU-SAP01_adminSubnet-nsg"
+#admin_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-NOEU-SAP01_adminSubnet-nsg"
 
 # DB subnet
 # If defined these parameters control the subnet name and the subnet prefix
@@ -86,13 +86,13 @@ network_name="SAP01"
 #db_subnet_address_prefix="10.1.2.0/24"
 
 # db_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#db_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-WEEU-SAP01-vnet/subnets/DEV-WEEU-SAP01-subnet_db"
+#db_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-NOEU-SAP01-vnet/subnets/DEV-NOEU-SAP01-subnet_db"
 
 # db_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
 #db_subnet_nsg_name=""
 
 # db_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#db_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-WEEU-SAP01_dbSubnet-nsg"
+#db_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-NOEU-SAP01_dbSubnet-nsg"
 
 
 # APP subnet
@@ -104,13 +104,13 @@ network_name="SAP01"
 #app_subnet_address_prefix="10.1.3.0/24"
 
 # app_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#app_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-WEEU-SAP01-vnet/subnets/DEV-WEEU-SAP01-subnet_app"
+#app_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-NOEU-SAP01-vnet/subnets/DEV-NOEU-SAP01-subnet_app"
 
 # app_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
 #app_subnet_nsg_name=""
 
 # app_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#app_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-WEEU-SAP01_appSubnet-nsg"
+#app_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-NOEU-SAP01_appSubnet-nsg"
 
 # WEB subnet
 # If defined these parameters control the subnet name and the subnet prefix
@@ -121,13 +121,13 @@ network_name="SAP01"
 #web_subnet_address_prefix="10.1.4.0/24"
 
 # web_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#web_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-WEEU-SAP01-vnet/subnets/DEV-WEEU-SAP01-subnet_web"
+#web_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/DEV-NOEU-SAP01-vnet/subnets/DEV-NOEU-SAP01-subnet_web"
 
 # web_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
 #web_subnet_nsg_name=""
 
 # web_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#web_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-WEEU-SAP01_webSubnet-nsg"
+#web_subnet_nsg_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-INFRASTRUCTURE/providers/Microsoft.Network/networkSecurityGroups/DEV-NOEU-SAP01_webSubnet-nsg"
 
 #########################################################################################
 #                                                                                       #
@@ -216,7 +216,7 @@ database_vm_image={
 #database_vm_authentication_type="key"
 
 # Optional, Defines the list of availability sets to deployt the Database VMs in
-#database_vm_avset_arm_ids=[/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-WEEU-SAP01-X00/providers/Microsoft.Compute/availabilitySets/DEV-WEEU-X00_db_avset"
+#database_vm_avset_arm_ids=[/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/DEV-NOEU-SAP01-X00/providers/Microsoft.Compute/availabilitySets/DEV-NOEU-X00_db_avset"
 
 # Optional, Defines the that the database virtual machines will not be placed in a proximity placement group
 #database_no_ppg=false
