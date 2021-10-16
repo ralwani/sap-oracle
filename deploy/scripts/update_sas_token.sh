@@ -1,8 +1,8 @@
 # This is the SAP library’s storage account for sap binaries
-if [ ! -n "${SAP_LIBRARY_TF}" ] ;then
-  read -p "Please provide the terraform state storage account from SAP_LIBRARY? "  saplib
+if [ ! -n "${SAP_LIBRARY_LB}" ] ;then
+  read -p "Please provide the SAP Bits storage account from SAP_LIBRARY? "  saplib
 else
-  saplib="${SAP_LIBRARY_TF}"
+  saplib="${SAP_LIBRARY_LB}"
 fi
 
 
