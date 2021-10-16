@@ -52,7 +52,7 @@ location="uksouth"
 
 # The network logical name is mandatory - it is used in the naming convention and should map to the workload virtual network logical name 
 network_name="SAP01"
-network_logical_name = "SAP"
+network_logical_name ="SAP"
 
 # network_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing Virtual Network
 #network_arm_id=""
