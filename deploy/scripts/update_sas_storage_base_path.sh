@@ -1,6 +1,6 @@
 # This is the SAP library’s storage account for sap binaries
 if [ ! -n "${SAP_LIBRARY_LB}" ] ;then
-  read -p "Please provide the SAP Bits storage account from SAP_LIBRARY? "  sapbitslib
+  read -p "Please provide the SAP Bits storage account? "  sapbitslib
 else
   sapbitslib="${SAP_LIBRARY_LB}"
 fi
