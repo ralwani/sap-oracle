@@ -10,7 +10,7 @@ base_path=https://${sapbitslib}.blob.core.windows.net/sapbits
 if [ ! -n "${SAP_LIB_SAS}" ] ;then
   read -p "Please provide the SAP Bits storage SAS Token? "  sas
 else
-  sas="${SAP_LIB_SAS}"
+  sas="?${SAP_LIB_SAS}"
 fi
 # This is the deployer keyvault
 if [ ! -n "${SAP_KV_TF}" ] ;then
