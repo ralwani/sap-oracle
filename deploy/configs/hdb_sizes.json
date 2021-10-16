@@ -133,7 +133,7 @@
         "S4Demo": {
             "compute": {
                 "vm_size"                      : "Standard_E20ds_v4",
-                "accelerated_networking"       : false
+                "accelerated_networking"       : true
             },
             "storage": [
                 {
@@ -188,6 +188,7 @@
         "M32ts": {
             "compute": {
                 "vm_size": "Standard_M32ts",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -253,6 +254,7 @@
         "M32ls": {
             "compute": {
                 "vm_size": "Standard_M32ls",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -318,6 +320,7 @@
         "M64ls": {
             "compute": {
                 "vm_size": "Standard_M64ls",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -383,6 +386,7 @@
         "M64s": {
             "compute": {
                 "vm_size": "Standard_M64s",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -448,6 +452,7 @@
         "M64ms": {
             "compute": {
                 "vm_size": "Standard_M64ms",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -513,6 +518,7 @@
         "M128s": {
             "compute": {
                 "vm_size": "Standard_M128s",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -578,6 +584,7 @@
         "M128ms": {
             "compute": {
                 "vm_size": "Standard_M128ms",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -643,6 +650,7 @@
         "M208s_v2": {
             "compute": {
                 "vm_size": "Standard_M208s_v2",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -708,6 +716,7 @@
         "M208ms_v2": {
             "compute": {
                 "vm_size": "Standard_M208ms_v2",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -773,6 +782,7 @@
         "M416s_v2": {
             "compute": {
                 "vm_size": "Standard_M416s_v2",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
@@ -838,6 +848,7 @@
         "M416ms_v2": {
             "compute": {
                 "vm_size": "Standard_M416ms_v2",
+                "accelerated_networking"       : true,
                 "swap_size_gb": 2
             },
             "storage": [
