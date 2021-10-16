@@ -23,7 +23,7 @@ deployer_tfstate_key=null
 environment="MGMT"
 
 # The location valus is a mandatory field, it is used to control where the resources are deployed
-location="eastasia"
+location="southeastasia"
 
 # RESOURCEGROUP
 # The two resource group name and arm_id can be used to control the naming and the creation of the resource group
@@ -45,7 +45,7 @@ location="eastasia"
 deployer_environment="MGMT"
 
 # The deployer_location value is a mandatory field, it is used for identifying the deployer
-deployer_location="eastasia"
+deployer_location="southeastasia"
 
 # The deployer_vnet value is a mandatory field, it is used for identifying the deployer
 deployer_vnet="DEP00"
