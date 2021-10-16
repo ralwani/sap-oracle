@@ -55,7 +55,7 @@
     "Default": {
       "compute": {
         "vm_size": "Standard_D4s_v3",
-        "accelerated_networking": false
+        "accelerated_networking": true
       },
       "storage": [
         {
@@ -106,8 +106,8 @@
   "web": {
     "Default": {
       "compute": {
-        "vm_size": "Standard_E4ds_v4",
-        "accelerated_networking": false
+        "vm_size": "Standard_D4ds_v4",
+        "accelerated_networking": true
       },
       "storage": [
         {
