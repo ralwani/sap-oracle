@@ -14,9 +14,9 @@
 # - landscape_tfstate_key is the state file name for the workload deployment
 # These are required parameters, if using the deployment scripts they will be auto populated otherwise they need to be entered
 
-#tfstate_resource_id   = null
-#deployer_tfstate_key  = null
-#landscape_tfstate_key = null
+#tfstate_resource_id=null
+#deployer_tfstate_key=null
+#landscape_tfstate_key=null
 
 #########################################################################################
 #                                                                                       #
@@ -61,7 +61,7 @@ location="uksouth"
 
 # The network logical name is mandatory - it is used in the naming convention and should map to the workload virtual network logical name 
 network_name="SAP01"
-network_logical_name = "SAP"
+network_logical_name ="SAP"
 # ADMIN subnet
 # If defined these parameters control the subnet name and the subnet prefix
 # admin_subnet_name is an optional parameter and should only be used if the default naming is not acceptable 
@@ -227,7 +227,7 @@ database_vm_use_DHCP=true
 sid="X00"
 
 app_tier_vm_sizing="Production"
-use_loadbalancers_for_standalone_deployments = false
+use_loadbalancers_for_standalone_deployments=false
 # app_tier_use_DHCP is a boolean flag controlling if Azure subnet provided IP addresses should be used (true)
 app_tier_use_DHCP=true
 # Optional, Defines the default authentication model for the Applicatiuon tier VMs (key/password)

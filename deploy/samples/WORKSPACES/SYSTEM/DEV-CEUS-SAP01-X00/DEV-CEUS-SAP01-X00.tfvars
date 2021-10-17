@@ -14,9 +14,9 @@
 # - landscape_tfstate_key is the state file name for the workload deployment
 # These are required parameters, if using the deployment scripts they will be auto populated otherwise they need to be entered
 
-tfstate_resource_id  = null
-deployer_tfstate_key  = null
-landscape_tfstate_key= null
+tfstate_resource_id=null
+deployer_tfstate_key=null
+landscape_tfstate_key=null
 
 #########################################################################################
 #                                                                                       #
@@ -28,7 +28,7 @@ landscape_tfstate_key= null
 environment="DEV"
 
 # The location valus is a mandatory field, it is used to control where the resources are deployed
-location="westeurope"
+location="centralus"
 
 # RESOURCEGROUP
 # The two resource group name and arm_id can be used to control the naming and the creation of the resource group
@@ -188,8 +188,8 @@ database_vm_image={
 #  os_type=""
 #  source_image_id=""
 #  publisher="SUSE"
-#  offer="sles-sap-12-sp5"
-#  sku="gen1"
+#  offer="sles-sap-15-sp1"
+#  sku="gen2"
 #  version="latest"
 #}
 #RedHat
@@ -301,7 +301,15 @@ application_server_image= {
   sku="gen1"
   version="latest"
 }
-
+#SUSE 15 SP1
+#database_vm_image={
+#  os_type=""
+#  source_image_id=""
+#  publisher="SUSE"
+#  offer="sles-sap-15-sp1"
+#  sku="gen2"
+#  version="latest"
+#}
 # SCS Servers
 
 # scs_server_count defines how many SCS servers to deploy
@@ -397,7 +405,7 @@ webdispatcher_server_count=0
 # offer="sles-sap-12-sp5"
 # sku="gen1"
 #}
-use_loadbalancers_for_standalone_deployments = false
+use_loadbalancers_for_standalone_deployments=false
 #########################################################################################
 #                                                                                       #
 #  Credentials                                                                          #
