@@ -20,11 +20,6 @@
     state:                             enabled
     permanent:                         true
 
-- name:                                Ensure the Pacemaker service is started and enabled
-  ansible.builtin.systemd:
-    name:                              pcsd
-    state:                             started
-    enabled:                           true
 
 # Basic Pacemaker cluster configuration:
 # https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-rhel-pacemaker
@@ -102,6 +97,7 @@
                                          pcmk_action_limit=3
                                          pcmk_delay_max=15
                                          op monitor interval=3600
+                                         
       when:                            ansible_distribution_major_version == "7"
 
 
@@ -119,8 +115,11 @@
                                         pcmk_monitor_retries=4
                                         pcmk_action_limit=3
                                         pcmk_delay_max=15
-                                        op monitor interval=3600
       when:                           ansible_distribution_major_version == "8"
+
+    - name:                           Update Monitor interval
+      ansible.builtin.command:        pcs resource update rsc_st_azure op monitor interval=3600s
+
 
     - name:                           Ensure the STONITH action is set to reboot
       ansible.builtin.command:        pcs property set stonith-action=reboot

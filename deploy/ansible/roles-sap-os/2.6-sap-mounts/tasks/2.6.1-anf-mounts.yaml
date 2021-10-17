@@ -351,6 +351,7 @@
                                       /sapmnt/{{ sap_sid|upper }} -nfsvers=4.1,nobind,sec=sys {{ sap_mnt }}/sapmnt{{ sap_sid|upper }}
                                       /usr/sap/{{ sap_sid|upper }}/SYS -nfsvers=4.1,nobind,sec=sys {{ sap_mnt }}/usrsap{{ sap_sid|upper }}sys
                                       /usr/sap/{{ sap_sid|upper }}/ASCS{{ scs_instance_number }} -nfsvers=4.1,nobind,sec=sys {{ sap_mnt }}/usrsap{{ sap_sid|upper }}ascs{{ scs_instance_number }}
+                                      /usr/sap/trans -nfsvers=4.1,nobind,sec=sys {{ sap_trans }}/usrsaptrans
   register: autofs_configuration_changed_scs
   when:
     - tier == 'sapos'
