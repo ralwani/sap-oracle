@@ -22,6 +22,7 @@ data "azurerm_subnet" "subnet_sap_app" {
 # Creates web dispatcher subnet of SAP VNET
 resource "azurerm_subnet" "subnet_sap_web" {
   provider             = azurerm.main
+  depends_on           = [azurerm_subnet.subnet_sap_app]
   count                = local.enable_deployment && local.sub_web_defined ? (local.sub_web_exists ? 0 : 1) : 0
   name                 = local.sub_web_name
   resource_group_name  = local.vnet_sap_resource_group_name

@@ -57,6 +57,41 @@
     state:                             absent
   when:                                reinstall
 
+- name:     "Create run flag directory"
+  ansible.builtin.file:
+    path:   /etc/sap_deployment_automation
+    state:  directory
+    mode:   0755
+
+- name:               "SAP SCS reset"
+  ansible.builtin.file: 
+    path: /etc/sap_deployment_automation/sap_deployment_scs.txt
+    state: absent
+  when: reinstall == true 
+
+- name:     "Create run flag directory"
+  ansible.builtin.file:
+    path:   /etc/sap_deployment_automation
+    state:  directory
+    mode:   0755
+
+- name:               "SAP SCS reset"
+  ansible.builtin.file: 
+    path: /etc/sap_deployment_automation/sap_deployment_scs.txt
+    state: absent
+  when: reinstall == true 
+
+- name: SAP SCS install variables
+  debug:
+    msg: "{{ sap_inifile }}"
+    verbosity: 2
+
+- name: SAP SCS install variables
+  debug:
+    msg: "{{ bom.product_ids.scs }}"
+    verbosity: 2
+
+
 
 # *====================================4=======================================8
 #   SAP SCS: Install

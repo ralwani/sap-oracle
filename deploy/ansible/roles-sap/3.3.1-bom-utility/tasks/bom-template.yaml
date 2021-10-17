@@ -63,15 +63,9 @@
 #       sidadm_uid
 # -------------------------------------+---------------------------------------8
 
-<<<<<<< HEAD
-#------------------<DEBUGGING>-------------------
-- name:       Parameters
-  debug:  
-=======
 # ------------------<DEBUGGING>-------------------
 - name:                                Parameters
   ansible.builtin.debug:
->>>>>>> 4a147b2d8b6b038a4058d0691790d8601d9a16e0
     msg:
       - "SAP SID              : {{ sap_sid }}"
       - "Instance Number - SCS: {{ scs_instance_number }}"

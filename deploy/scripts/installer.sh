@@ -615,7 +615,6 @@ echo $allParams
 
 terraform -chdir="$terraform_module_directory" plan -no-color -detailed-exitcode $allParams > plan_output.log
 return_value=$?
-
 if [ 1 == $return_value ]
 then
     echo ""

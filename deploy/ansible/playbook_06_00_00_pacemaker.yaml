@@ -61,6 +61,35 @@
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
+  - block:
+    - include_role:
+          name:     roles-os/1.16-services
+    tags:
+      - 1.16-services
+
+  - block:
+    - include_role:
+          name:     roles-os/1.11-accounts
+    tags:
+      - 1.11-accounts
+
+  - block:
+      - include_role:
+          name:     roles-os/1.17-generic-pacemaker                         # Configures the Pacemaker cluster with Azure fence agent 
+        when: db_high_availability == true          
+    tags:
+      - 1.17-generic-pacemaker
+
+- hosts:          "{{ sap_sid|upper }}_SCS  :
+                  {{ sap_sid|upper }}_ERS"  
+
+  name:           PACEMAKER - General - Config - Central Services
+  remote_user:    "{{ orchestration_ansible_user }}"                
+  become:         yes
+  become_user:    root
+  gather_facts:   true
+  vars_files:
+    - vars/ansible-input-api.yaml                               # API Input template with defaults
 
 # -------------------------------------+---------------------------------------8
 #
