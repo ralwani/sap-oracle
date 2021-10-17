@@ -28,7 +28,7 @@ landscape_tfstate_key=null
 environment="DEV"
 
 # The location valus is a mandatory field, it is used to control where the resources are deployed
-location="westus"
+location="westus2"
 
 # RESOURCEGROUP
 # The two resource group name and arm_id can be used to control the naming and the creation of the resource group
