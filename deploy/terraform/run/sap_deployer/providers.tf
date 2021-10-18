@@ -15,6 +15,7 @@ Description:
 
 provider "azurerm" {
   features {}
+  partner_id      = "fde452b3-60b3-4ce5-831c-c354d84dacdd"
 }
 
 terraform {
@@ -39,5 +40,6 @@ terraform {
       source = "hashicorp/azurerm"
       version = "2.79.1"
     }
+  
   }
 }

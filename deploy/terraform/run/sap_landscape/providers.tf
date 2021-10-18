@@ -24,6 +24,7 @@ provider "azurerm" {
   tenant_id       = local.use_spn ? local.spn.tenant_id : null
   use_msi         = false
   alias           = "main"
+  partner_id      = "fde452b3-60b3-4ce5-831c-c354d84dacdd"
 }
 
 provider "azurerm" {
