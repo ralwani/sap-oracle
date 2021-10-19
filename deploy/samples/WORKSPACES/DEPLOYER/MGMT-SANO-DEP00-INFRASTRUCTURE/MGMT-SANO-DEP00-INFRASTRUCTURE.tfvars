@@ -24,7 +24,7 @@ location="southafricanorth"
 
 #management_network_name=""
 #management_network_arm_id=""
-management_network_address_space="10.18.20.0/25"
+management_network_address_space="10.19.20.0/25"
 
 
 # management subnet
@@ -33,7 +33,7 @@ management_network_address_space="10.18.20.0/25"
 #management_subnet_name=""
 
 # management_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-management_subnet_address_prefix="10.18.20.64/28"
+management_subnet_address_prefix="10.19.20.64/28"
 # management_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
 #management_subnet_arm_id="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/MGMT-WEEU-MGMT01-INFRASTRUCTURE/providers/Microsoft.Network/virtualNetworks/MGMT-WEEU-MGMT01-vnet/subnets/MGMT-WEEU-MGMT01-subnet_management"
 
@@ -44,7 +44,7 @@ management_subnet_address_prefix="10.18.20.64/28"
 #management_firewall_subnet_arm_id= ""
 
 # management_firewall_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-management_firewall_subnet_address_prefix="10.18.20.0/26"
+management_firewall_subnet_address_prefix="10.19.20.0/26"
 
 ########################################################
 #
