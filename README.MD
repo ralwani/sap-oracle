@@ -37,7 +37,7 @@ The first deployment activity is to prepare the deployment environment. This env
 
 ### **SAP Library** ###
 
-The SAP library will provide persistent storage for the Terraform state files as well as storage for the SAP Installation media. For more information see [SAP Library documentation](/documentation/SAP_Automation_on_Azure/Software_Documentation/product_documentation-sap_library.md) and [SAP Library configuration](/documentation/SAP_Automation_on_Azure/Software_Documentation/configuration-sap_library.md)
+The SAP library will provide persistent storage for the Terraform state files as well as storage for the SAP Installation media.
 
 ![SAP Deployment Automation Framework - Library](/documentation/images/Library.png)
 
