@@ -10,18 +10,28 @@
 #         secure storage key
 #
 
+# /*---------------------------------------------------------------------------8
+# |                                                                            |
+# |                Perform the Oracle Instance ASM installation                    |
+# |                  SAP: Register BOM                                         |
+# |                  create .params directory                                  |
+# |                  Export environment variables for Oracle Installation      |
+# |                  Run the Oracle universal installer in silent mode.        |
+# |                   SAP Note : 2660017 Oracle Software Installation on Unix  |
+# |                                                                            |
+# +------------------------------------4--------------------------------------*/
+
+# TODO: Considerations
+#         15G+ swap space for Oracle DB installation.
+#         MAke the installer more version independent
+#
+
 ---
-
-- name:  
-  ansible.builtin.set_fact:
-    dir_params:                   "{{ target_media_location }}/.params"
-
 
 - name:                                Load the disk configuration settings
   ansible.builtin.include_vars:        disks_config_asm.yml
 
-#   0x) Create hidden directory for parameter files
-- name:     "Create hidden directory"
+- name:                                "Create hidden directory"
   ansible.builtin.file:
     path:   "{{ item.path }}"
     state:  directory
