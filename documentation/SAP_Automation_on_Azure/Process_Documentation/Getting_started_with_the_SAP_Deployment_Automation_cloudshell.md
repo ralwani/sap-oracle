@@ -46,7 +46,7 @@ For the purpose of this document we will talk about two ways of authenticating t
 
     cd sap-oracle
 
-    git checkout beta
+    git checkout feature-oracle
     ```
 
     **Note** If using the deployer the repository is already cloned.
