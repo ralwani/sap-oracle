@@ -197,7 +197,7 @@
   loop:
     - { tier: 'ora',            type: 'xfs',     src: '/dev/vg_sap/lv_usrsap',                             path: '/usr/sap' }
     - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/usr/sap/install',                 path: '/usr/sap/install' }                # Special Install Structure; Destroy on Completion
-    - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/sapmnt/{{ anydb_sid|upper }}',    path: '/sapmnt/{{ anydb_sid|upper }}' }
+    - { tier: 'ora',            type: 'nfs4',    src: '{{ nfs_server }}:/sapmnt/{{ db_sid|upper }}',       path: '/sapmnt/{{ db_sid|upper }}' }
     - { tier: 'ora',            type: 'xfs',     src: '/dev/vg_oracle/lv_oracle',                          path: '/oracle'         } 
   when:         
     item.tier == "ora"
@@ -407,7 +407,7 @@
 - name:         Initialize ASM DISKS DATA"
   ansible.builtin.shell: |   
                      set -o errexit
-                     /usr/sbin/oracleasm createdisk DATA"{{ anydb_sid|upper }}"0"{{ ansible_loop.index }}"  "{{ item }}1"
+                     /usr/sbin/oracleasm createdisk DATA"{{ db_sid|upper }}"0"{{ ansible_loop.index }}"  "{{ item }}1"
                      chown -R oracle:oinstall "{{ item }}1"
   loop:         "{{ datadisklist }}"
   loop_control:
@@ -462,7 +462,7 @@
 - name:         Initialize ASM DISKS ARCH"
   ansible.builtin.shell: |   
                      set -o errexit
-                     /usr/sbin/oracleasm createdisk ARCH"{{ anydb_sid|upper }}"0"{{ ansible_loop.index }}"  "{{ item }}1"  
+                     /usr/sbin/oracleasm createdisk ARCH"{{ db_sid|upper }}"0"{{ ansible_loop.index }}"  "{{ item }}1"  
                      chown -R oracle:oinstall "{{ item }}1"
   loop:         "{{ archdisklist }}"
   loop_control:
@@ -517,7 +517,7 @@
 - name:         Initialize ASM DISKS RECO"
   ansible.builtin.shell: |   
                      set -o errexit
-                     /usr/sbin/oracleasm createdisk RECO"{{ anydb_sid|upper }}"0"{{ ansible_loop.index }}"  "{{ item }}1"
+                     /usr/sbin/oracleasm createdisk RECO"{{ db_sid|upper }}"0"{{ ansible_loop.index }}"  "{{ item }}1"
                      chown -R oracle:oinstall "{{ item }}1"
   loop:         "{{ recodisklist }}"
   loop_control:

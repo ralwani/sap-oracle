@@ -1,15 +1,3 @@
-#   SAP: Register BOM
-#   Prepare ASM Disks
-#   Run the Oracle universal installer in silent mode. Refer to SAP Note : 2660017 Oracle Software Installation on Unix
-#
-
-# TODO: Considerations
-#         15G+ swap space for Oracle DB installation.
-#         message server acl
-#         certificates
-#         secure storage key
-#
-
 # /*---------------------------------------------------------------------------8
 # |                                                                            |
 # |                Perform the Oracle Instance ASM installation                    |
@@ -28,178 +16,197 @@
 
 ---
 
-- name:                                Load the disk configuration settings
+- name:                                "SAP Oracle ASM: Load the disk configuration settings"
   ansible.builtin.include_vars:        disks_config_asm.yml
 
 - name:                                "Create hidden directory"
   ansible.builtin.file:
-    path:   "{{ item.path }}"
-    state:  directory
-    mode:   0755
+    path:                              "{{ item.path }}"
+    state:                             directory
+    mode:                              0755
   loop:
     - { state: 'directory', mode: '0755', path: '{{ dir_params }}' }
 
-- name:     "Create run flag directory"
+- name:                                "SAP Oracle ASM: Permissions"
   ansible.builtin.file:
-    path:   /etc/sap_deployment_automation/oracle
-    state:  directory
-    mode:   0755
-    owner:  oracle
-    group:  oinstall
+    path:                              /etc/sap_deployment_automation/oracle
+    state:                             directory
+    mode:                              0755
+    owner:                             oracle
+    group:                             oinstall
 
-- name:     "Create Grid software directory"
+- name:                                "SAP Oracle ASM: Create Grid software directory"
   ansible.builtin.file:
-    path:   /oracle/stage/{{ ora_release }}/grid_home
-    state:  directory
-    owner:  oracle
-    group:  oinstall
+    path:                              /oracle/stage/{{ ora_release }}/grid_home
+    state:                             directory
+    owner:                             oracle
+    group:                             oinstall
 
-
-
-- name:               "Permission for Grid software Directory"
-  become:             yes
-  become_user:        root
-  ansible.builtin.shell: |
-                        set -o errexit
-                        chown -R oracle:oinstall /oracle/*
-  args:
-    creates:            /etc/sap_deployment_automation/oracle/oraclepermupd.txt                    
-
-- name:            "create after a directory permission changes"
+- name:                                "SAP Oracle ASM: Permission for Grid software Directory"
   ansible.builtin.file:
-    path:              "/etc/sap_deployment_automation/oracle/oraclepermupd.txt"
-    state:             touch
-  
+    path:                              /oracle
+    state:                             directory
+    owner:                             oracle
+    group:                             oinstall
+    recurse:                           true
 
 
-#   Oracle Grid: Response file
+# +------------------------------------4--------------------------------------*/
+# |                                                                            |
+# |                       Oracle Grid: Response file                           |
+# |                                                                            |
+# +------------------------------------4--------------------------------------*/
+
+#   
 - name:                               "SAP Oracle ASM: deploy Grid install response file"
-  become:             yes
-  become_user:        oracle
+  become:                             yes
+  become_user:                        oracle
   ansible.builtin.template:
     src:                              ORACLE_19c_00_asm_v1_install.rsp.j2
-    dest:                             "/etc/sap_deployment_automation/oracle/ORACLE_{{ ora_release }}c_00_asm_{{ ansible_hostname }}_{{ anydb_sid }}_install.rsp"
+    dest:                             "/etc/sap_deployment_automation/oracle/ORACLE_{{ ora_release }}c_00_asm_{{ ansible_hostname }}_{{ db_sid }}_install.rsp"
     mode:                             0644
     force:                            true
 
 
-#STEP1 Install Grid Software
-# Unzipping this pakcage might have longer runtime.
-- name:               "Unzip the Gridsoftware"
-  become:             yes
-  become_user:        oracle
-  ansible.builtin.shell: |
-                      set -o errexit
-                      unzip -o -q -d /oracle/stage/{{ ora_release }}/grid_home  /usr/sap/install/oraserver/LINUX_X86_64/grid_home/LINUX.X64_193000_grid_home.zip
-                      mkdir /oracle/installlogs
+# +------------------------------------4--------------------------------------*/
+# |                                                                            |
+# |                       Oracle Grid: Install software                        |
+# |                                                                            |
+# +------------------------------------4--------------------------------------*/
+
+- name:                                "SAP Oracle ASM: Unzip the Grid software"
+  become:                              yes
+  become_user:                         oracle
+  ansible.builtin.unarchive:
+    src:                               /usr/sap/install/oraserver/LINUX_X86_64/grid_home/LINUX.X64_193000_grid_home.zip
+    dest:                              /oracle/stage/{{ ora_release }}/grid_home
   args:
-    chdir:             /oracle/stage
-    creates:           /etc/sap_deployment_automation/oracle/gridswunzip.txt
+    chdir:                             /oracle/stage
+    creates:                           /etc/sap_deployment_automation/oracle/gridswunzip.txt
 
 
-- name:            "create after a sucessfull unzip install"
+- name:                                "SAP Oracle ASM: create after a successful unzip"
   ansible.builtin.file:
-    path:              "/etc/sap_deployment_automation/oracle/gridswunzip.txt"
-    state:             touch
+    path:                              "/etc/sap_deployment_automation/oracle/gridswunzip.txt"
+    state:                             touch
 
 
-- name:               "Install CVUQDISK RPM"
-  become:             yes
-  become_user:        root
+- name:                                "SAP Oracle ASM: Install CVUQDISK RPM"
+  become:                               yes
+  become_user:                          root
   ansible.builtin.shell: |
                       set -o errexit
                       yum install -y /oracle/stage/{{ ora_release }}/grid_home/cv/rpm/cvuqdisk-1.0.10-1.rpm
 
 
-#STEP2 RUN THE INSTALLATION - EXECUTE.
+# +------------------------------------4--------------------------------------*/
+# |                                                                            |
+# |                       Oracle Grid: Perform installation                    |
+# |                                                                            |
+# +------------------------------------4--------------------------------------*/
 
-- name:               "Execute GRIDSETUP"
-  become:             yes
-  become_user:        oracle
+
+- name:                                "SAP Oracle ASM: Install Execute GRIDSETUP"
+  become:                              yes
+  become_user:                         oracle
   ansible.builtin.shell: |
-                      set -o errexit
-                      ./gridSetup.sh -silent -responseFile /etc/sap_deployment_automation/oracle/ORACLE_19c_00_asm_{{ ansible_hostname }}_{{ anydb_sid }}_install.rsp |tee -a /oracle/installlogs/gridinstall.log
-  register:           gridinstaller_results
+                                       set -o errexit
+                                       ./gridSetup.sh -silent -responseFile /etc/sap_deployment_automation/oracle/ORACLE_19c_00_asm_{{ ansible_hostname }}_{{ db_sid }}_install.rsp |tee -a /oracle/installlogs/gridinstall.log
+  register:                            gridinstaller_results
   #failed_when:        gridinstaller_results.rc >= 2              #installer returns rc=1 (exited with warning) by default when run is silent mode as the oratab file is created only after running the root.sh
   environment:
-    CV_ASSUME_DISTID:             OL7
+    CV_ASSUME_DISTID:                  OL7
   args:       
-    executable:        /bin/csh
-    chdir:            "/oracle/stage/{{ ora_release }}/grid_home"
-    creates:           /etc/sap_deployment_automation/oracle/gridinstall.txt
+    executable:                        /bin/csh
+    chdir:                             "/oracle/stage/{{ ora_release }}/grid_home"
+    creates:                           /etc/sap_deployment_automation/oracle/gridinstall.txt
 
-- name:            "create after a sucessfull GRID install"
+- name:                                "SAP Oracle ASM: Create after a successful GRID install"
   ansible.builtin.file:
-    path:              "/etc/sap_deployment_automation/oracle/gridinstall.txt"
-    state:             touch
+    path:                              "/etc/sap_deployment_automation/oracle/gridinstall.txt"
+    state:                             touch
 
 
-#STEP3 POST PROCESSING.
+
+# +------------------------------------4--------------------------------------*/
+# |                                                                            |
+# |                       Oracle Grid: Post processing                         |
+# |                                                                            |
+# +------------------------------------4--------------------------------------*/
 
 
-- name:           "Oracle Post Processing - Run root.sh"                
-  become:         yes
-  become_user:    root
+- name:                                "SAP Oracle ASM: Oracle Post Processing - Run root.sh"                
+  become:                              yes
+  become_user:                         root
   ansible.builtin.shell: |   
-                     /oracle/oraInventory/orainstRoot.sh
-                     /oracle/stage/{{ ora_release }}/grid_home/root.sh                                    
-  register: rootscript_results
+                                      /oracle/oraInventory/orainstRoot.sh
+                                      /oracle/stage/{{ ora_release }}/grid_home/root.sh                                    
+  register:                           rootscript_results
   args:
-    executable:       /bin/csh
-    creates:          /etc/sap_deployment_automation/oracle/gridinstallrootscript.txt
+    executable:                       /bin/csh
+    creates:                          /etc/sap_deployment_automation/oracle/gridinstall_rootscript.txt
 
-- name:            "creates after a sucessfull script execution"
+- name:                                "SAP Oracle ASM: creates after a successful post processing script execution"
   ansible.builtin.file:
-    path:              "/etc/sap_deployment_automation/oracle/gridinstallrootscript.txt"
-    state:             touch
+    path:                             "/etc/sap_deployment_automation/oracle/gridinstall_rootscript.txt"
+    state:                            touch
   
 
-# #STEP 4  Execute Config tools.
-- name:               "Execute ASM Configtools"
-  become:             yes
-  become_user:        oracle
+# +------------------------------------4--------------------------------------*/
+# |                                                                            |
+# |                       Oracle Grid: Execute Config tools                    |
+# |                                                                            |
+# +------------------------------------4--------------------------------------*/
+
+- name:                                "SAP Oracle ASM: Execute ASM Config tools"
+  become:                              yes
+  become_user:                         oracle
   ansible.builtin.shell: |
-                      set -o errexit
-                      ./gridSetup.sh -executeConfigTools -silent -responseFile /etc/sap_deployment_automation/oracle/ORACLE_19c_00_asm_{{ ansible_hostname }}_{{ anydb_sid }}_install.rsp |tee -a /oracle/installlogs/asmtoolsinstall.log
-  register:           toolsinstaller_results
+                                       set -o errexit
+                                       ./gridSetup.sh -executeConfigTools -silent -responseFile /etc/sap_deployment_automation/oracle/ORACLE_19c_00_asm_{{ ansible_hostname }}_{{ db_sid }}_install.rsp |tee -a /oracle/installlogs/asm_tools_install.log
+  register:                            tools_installer_results
   #failed_when:        gridinstaller_results.rc >= 2              #installer returns rc=1 (exited with warning) by default when run is silent mode as the oratab file is created only after running the root.sh
   environment:
-    DB_SID:                       "{{anydb_sid}}"
-    CV_ASSUME_DISTID:             OL7
+    DB_SID:                            "{{ db_sid }}"
+    CV_ASSUME_DISTID:                  OL7
   args:       
-    executable:        /bin/csh
-    chdir:            "/oracle/stage/{{ ora_release }}/grid_home"
-    creates:           /etc/sap_deployment_automation/oracle/asmtoolsinstall.txt
+    executable:                        /bin/csh
+    chdir:                             "/oracle/stage/{{ ora_release }}/grid_home"
+    creates:                           /etc/sap_deployment_automation/oracle/asm_tools_install.txt
 
-- name:            "create after a sucessfull install"
+- name:                                "SAP Oracle ASM: Create after a successful Config tool execution"
   ansible.builtin.file:
-    path:              "/etc/sap_deployment_automation/oracle/asmtoolsinstall.txt"     
-    state:             touch 
+    path:                              "/etc/sap_deployment_automation/oracle/asm_tools_install.txt"     
+    state:                             touch 
+
+# +------------------------------------4--------------------------------------*/
+# |                                                                            |
+# |           Oracle Grid: Create ARCH and RECO disk groups using ASMCA        |
+# |                                                                            |
+# +------------------------------------4--------------------------------------*/
 
 
-# #STEP 5 Create ARCH and RECO disk groups using ASMCA.
-
-- name:           "Create ASM Disk groups ARCH and RECO"                
-  become:         yes
-  become_user:    oracle
+- name:                                "SAP Oracle ASM: Create ASM Disk groups ARCH and RECO"                
+  become:                              yes
+  become_user:                         oracle
   ansible.builtin.shell: |   
-                     set -o errexit
-                     ./asmca -silent -createDiskGroup -diskGroupName RECO -diskList '{{ recolistrsp }}1' 
-                     ./asmca -silent -createDiskGroup -diskGroupName ARCH -diskList '{{ archlistrsp }}1' 
-                     
-  register: diskgroupcreation_results
+                                      set -o errexit
+                                      ./asmca -silent -createDiskGroup -diskGroupName RECO -diskList '{{ recolistrsp }}1' 
+                                      ./asmca -silent -createDiskGroup -diskGroupName ARCH -diskList '{{ archlistrsp }}1' 
+                                     
+  register:                           diskgroup_creation_results
   environment:
-    DB_SID:                       "{{anydb_sid}}"
-    CV_ASSUME_DISTID:             OL7
+    DB_SID:                           "{{ db_sid }}"
+    CV_ASSUME_DISTID:                 OL7
   args:
-    executable:       /bin/csh
-    chdir:            "/oracle/stage/{{ ora_release }}/grid_home/bin"
-    creates:          /etc/sap_deployment_automation/oracle/diskgroupcreated.txt
+    executable:                       /bin/csh
+    chdir:                            "/oracle/stage/{{ ora_release }}/grid_home/bin"
+    creates:                          /etc/sap_deployment_automation/oracle/diskgroups_created.txt
 
-- name:            "creates after a sucessfull disk group creation"
+- name:                                "SAP Oracle ASM: Created after a successful disk group creation"
   ansible.builtin.file:
-    path:                "/etc/sap_deployment_automation/oracle/diskgroupcreated.txt"
-    state:               touch 
+    path:                             "/etc/sap_deployment_automation/oracle/diskgroups_created.txt"
+    state:                            touch 
 
 
 

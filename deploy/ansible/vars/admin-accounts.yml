@@ -202,7 +202,7 @@ admin_users:
 
 #Admin users for Oracle ASM
 
-  - name:         "ora{{ anydb_sid|lower }}"
+  - name:         "ora{{ db_sid|lower }}"
     comment:      "Oracle Database System Administrator"
     uid:          "{{ orasid_uid }}"
     group:        dba
