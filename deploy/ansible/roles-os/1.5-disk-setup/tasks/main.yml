@@ -68,6 +68,10 @@
 #
 - name:                                Load the disk configuration settings
   ansible.builtin.include_vars:        disks_config.yml
+  
+
+
+
 
 - name:                                "Print unique disks and volume group details"
   ansible.builtin.debug:
@@ -89,6 +93,7 @@
   register:                            vgscreated
   when:
     - tier == "sapos"
+    
   
 
 - name:                                "Filter the vg name from vgscreated results"
@@ -107,6 +112,7 @@
     verbosity:                         2
   when:
     - tier == "sapos"
+
 
 # Debug testing end of line 
 

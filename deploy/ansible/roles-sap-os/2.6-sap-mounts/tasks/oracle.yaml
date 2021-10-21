@@ -77,7 +77,7 @@
   when:         
     item.tier in ["sapos","ora"]
 
-# ORASID should be the owner of the file systems /oracle directories. 
+# ORACLE should be the owner of the file systems /oracle directories. 
 #.PARAMS folder is not required for oracle install as we are not passing any parameters files.
 
 
