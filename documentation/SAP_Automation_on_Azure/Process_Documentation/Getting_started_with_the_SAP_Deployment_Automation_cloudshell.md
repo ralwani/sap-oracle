@@ -6,7 +6,7 @@ The Azure cloud shell has all the prerequisites for deployment, as it as both th
 
 ## **Preparing the cloud shell** ##
 
-To be able to run the deployments from the cloud shell we need to clone the sap-hana repository to a directory in cloud shell.
+To be able to run the deployments from the cloud shell we need to clone the sap-oracle repository to a directory in cloud shell.
 
 Open the cloud shell and use bash.
 
@@ -39,12 +39,12 @@ For the purpose of this document we will talk about two ways of authenticating t
    mkdir ~/Azure_SAP_Automated_Deployment; cd $_
    ```
 
-3. Navigate to that directory and clone the sap-hana repository by running:
+3. Navigate to that directory and clone the sap-oracle repository by running:
 
     ```bash
-    git clone https://github.com/Azure/sap-hana.git
+    git clone https://github.com/Azure/sap-oracle.git
 
-    cd sap-hana
+    cd sap-oracle
 
     git checkout beta
     ```
